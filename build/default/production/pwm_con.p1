@@ -1,8 +1,8 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"3359 C:\Program Files (x86)\Microchip\xc8\v1.44\include\pic18f46k22.h
-[v _CCPR2L `Vuc ~T0 @X0 0 e@3943 ]
-"13430
+"13430 C:\Program Files (x86)\Microchip\xc8\v1.44\include\pic18f46k22.h
 [v _CCPR1L `Vuc ~T0 @X0 0 e@4030 ]
+"3359
+[v _CCPR2L `Vuc ~T0 @X0 0 e@3943 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -6652,72 +6652,86 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _d `i ~T0 @X0 1 e ]
 [v _adcp `i ~T0 @X0 1 e ]
 [v _adcn `i ~T0 @X0 1 e ]
-[; ;pwm_con.c: 13: int c,b,d,adcp,adcn;
-"17
-[v _pwm_set_duty2 `(v ~T0 @X0 1 ef1`i ]
-"18
+[v _type `i ~T0 @X0 1 e ]
+[v _dty `i ~T0 @X0 1 e ]
+[v _buck `i ~T0 @X0 1 e ]
+[v _boost `i ~T0 @X0 1 e ]
+[; ;pwm_con.c: 13: int c,b,d,adcp,adcn,type,dty,buck,boost;
+"42
+[v _buck_boost `(v ~T0 @X0 1 ef2`i`i ]
+"43
 {
-[; ;pwm_con.c: 17: void pwm_set_duty2(int duty_cycle)
-[; ;pwm_con.c: 18: {
-[e :U _pwm_set_duty2 ]
-"17
-[v _duty_cycle `i ~T0 @X0 1 r1 ]
-"18
+[; ;pwm_con.c: 42: void buck_boost (int type, int dty )
+[; ;pwm_con.c: 43: {
+[e :U _buck_boost ]
+[v _type `i ~T0 @X0 1 r1 ]
+[v _dty `i ~T0 @X0 1 r2 ]
 [f ]
-[; ;pwm_con.c: 19: if(duty_cycle>100)
-"19
-[e $ ! > _duty_cycle -> 100 `i 850  ]
-[; ;pwm_con.c: 20: {
-"20
+[; ;pwm_con.c: 44: if (type==1)
+"44
+[e $ ! == _type -> 1 `i 850  ]
+[; ;pwm_con.c: 45: {
+"45
 {
-[; ;pwm_con.c: 21: duty_cycle=100;
-"21
-[e = _duty_cycle -> 100 `i ]
-"22
+[; ;pwm_con.c: 46: CCPR1L=0;
+"46
+[e = _CCPR1L -> -> 0 `i `uc ]
+[; ;pwm_con.c: 47: if(dty>100)
+"47
+[e $ ! > _dty -> 100 `i 851  ]
+[; ;pwm_con.c: 48: {
+"48
+{
+[; ;pwm_con.c: 49: dty=100;
+"49
+[e = _dty -> 100 `i ]
+"50
+}
+[e :U 851 ]
+[; ;pwm_con.c: 50: }
+[; ;pwm_con.c: 52: c=dty*1.7;
+"52
+[e = _c -> * -> _dty `d .1.7 `i ]
+[; ;pwm_con.c: 53: CCPR2L=c;
+"53
+[e = _CCPR2L -> _c `uc ]
+"55
 }
 [e :U 850 ]
-[; ;pwm_con.c: 22: }
-[; ;pwm_con.c: 24: c=duty_cycle*1.7;
-"24
-[e = _c -> * -> _duty_cycle `d .1.7 `i ]
-[; ;pwm_con.c: 25: CCPR2L=c;
-"25
-[e = _CCPR2L -> _c `uc ]
-[; ;pwm_con.c: 28: }
-"28
-[e :UE 849 ]
+[; ;pwm_con.c: 55: }
+[; ;pwm_con.c: 57: if (type==2)
+"57
+[e $ ! == _type -> 2 `i 852  ]
+[; ;pwm_con.c: 58: {
+"58
+{
+[; ;pwm_con.c: 59: CCPR2L=0b11111111;
+"59
+[e = _CCPR2L -> -> 255 `i `uc ]
+[; ;pwm_con.c: 60: if(dty>100)
+"60
+[e $ ! > _dty -> 100 `i 853  ]
+[; ;pwm_con.c: 61: {
+"61
+{
+[; ;pwm_con.c: 62: dty=100;
+"62
+[e = _dty -> 100 `i ]
+"63
 }
-"29
-[v _pwm_set_duty3 `(v ~T0 @X0 1 ef1`i ]
-"30
-{
-[; ;pwm_con.c: 29: void pwm_set_duty3(int duty_cycle)
-[; ;pwm_con.c: 30: {
-[e :U _pwm_set_duty3 ]
-"29
-[v _duty_cycle `i ~T0 @X0 1 r1 ]
-"30
-[f ]
-[; ;pwm_con.c: 31: if(duty_cycle>100)
-"31
-[e $ ! > _duty_cycle -> 100 `i 852  ]
-[; ;pwm_con.c: 32: {
-"32
-{
-[; ;pwm_con.c: 33: duty_cycle=100;
-"33
-[e = _duty_cycle -> 100 `i ]
-"34
+[e :U 853 ]
+[; ;pwm_con.c: 63: }
+[; ;pwm_con.c: 65: c=dty*1.7;
+"65
+[e = _c -> * -> _dty `d .1.7 `i ]
+[; ;pwm_con.c: 66: CCPR1L=c;
+"66
+[e = _CCPR1L -> _c `uc ]
+"68
 }
 [e :U 852 ]
-[; ;pwm_con.c: 34: }
-[; ;pwm_con.c: 36: c=duty_cycle*1.7;
-"36
-[e = _c -> * -> _duty_cycle `d .1.7 `i ]
-[; ;pwm_con.c: 37: CCPR1L=c;
-"37
-[e = _CCPR1L -> _c `uc ]
-[; ;pwm_con.c: 40: }
-"40
-[e :UE 851 ]
+[; ;pwm_con.c: 68: }
+[; ;pwm_con.c: 69: };
+"69
+[e :UE 849 ]
 }

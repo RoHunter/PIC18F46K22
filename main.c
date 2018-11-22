@@ -15,8 +15,8 @@
 #define   new_transmision 2
 #define   transmision_done 1
 
-int a,c,fac;
-unsigned buck,boost,duty_boost,duty_buck;
+int a,c,d,fac;
+unsigned duty_boost,duty_buck;
 unsigned int pasi,dir,nr_pasi,directie_2,go_stepper,start,pasi_int,sel_pasi,nt;
 char str[20];
 void main(void)
@@ -42,7 +42,7 @@ void main(void)
          LATDbits.LD4=0; 
          
          
-         
+      ADCON0=0b00000011;    
          
          
          
@@ -51,34 +51,18 @@ void main(void)
          
     while(1)
     {
-
-//        ADCON0bits.GO=1;
-//        
-//        __delay_ms(100);
+       ADCON0=0b00000011;
+        __delay_ms(10);
+        ADCON0bits.GO=1;
+        __delay_ms(100);
 ////        USARTWriteChar('R');
 ////     
         rez_adc=ADRESH;
         numar=rez_adc*0.0182;
         dty=rez_adc*0.39;
-        dty=75;
-//        duty_buck=25;
-//        duty_boost=75;
-//    
-/*
- Buck:
 
-	    CCPR1L=0;///boost MOS boost OFF==OPEN
-        
-	    CCPR2L=64;///buck //// PWM
- */        
-        
-  pwm_set_duty3(75) ;   
-  pwm_set_duty2(75) ; 
- 
-        
-        
-        
-        
+buck_boost (2, dty );
+
         
         
         

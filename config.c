@@ -7,7 +7,7 @@ void config(void)
     TRISB=0X00;
     TRISC=0X00;
     TRISD=0X00;
-    TRISE=0X00;
+    TRISE=0Xff;
     
     PORTA=0X00;
     PORTB=0X00;

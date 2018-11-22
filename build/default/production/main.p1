@@ -19,12 +19,45 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S383 . . . ]
 "7921
 [v _LATDbits `VS383 ~T0 @X0 0 e@3980 ]
+"13609
+[v _ADCON0 `Vuc ~T0 @X0 0 e@4034 ]
+[v F6949 `(v ~T0 @X0 1 tf1`ul ]
+"164 C:\Program Files (x86)\Microchip\xc8\v1.44\include\pic18.h
+[v __delay `JF6949 ~T0 @X0 0 e ]
+[p i __delay ]
+"13615 C:\Program Files (x86)\Microchip\xc8\v1.44\include\pic18f46k22.h
+[s S643 :1 `uc 1 :1 `uc 1 ]
+[n S643 . . GO_NOT_DONE ]
+"13619
+[s S644 :1 `uc 1 :1 `uc 1 :5 `uc 1 ]
+[n S644 . ADON GO_nDONE CHS ]
+"13624
+[s S645 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S645 . . GO CHS0 CHS1 CHS2 CHS3 CHS4 ]
+"13633
+[s S646 :1 `uc 1 :1 `uc 1 ]
+[n S646 . . DONE ]
+"13637
+[s S647 :1 `uc 1 :1 `uc 1 ]
+[n S647 . . NOT_DONE ]
+"13641
+[s S648 :1 `uc 1 :1 `uc 1 ]
+[n S648 . . nDONE ]
+"13645
+[s S649 :1 `uc 1 :1 `uc 1 ]
+[n S649 . . GO_DONE ]
+"13649
+[s S650 :1 `uc 1 :1 `uc 1 ]
+[n S650 . . GODONE ]
+"13614
+[u S642 `S643 1 `S644 1 `S645 1 `S646 1 `S647 1 `S648 1 `S649 1 `S650 1 ]
+[n S642 . . . . . . . . . ]
+"13654
+[v _ADCON0bits `VS642 ~T0 @X0 0 e@4034 ]
 "13761
 [v _ADRESH `Vuc ~T0 @X0 0 e@4036 ]
-"36 pwm_con.h
-[v _pwm_set_duty3 `(v ~T0 @X0 0 ef1`i ]
-"35
-[v _pwm_set_duty2 `(v ~T0 @X0 0 ef1`i ]
+"34 pwm_con.h
+[v _buck_boost `(v ~T0 @X0 0 ef2`i`i ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -6668,8 +6701,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;config.h: 34: void pwm_config(void);
 [; ;config.h: 35: void adc_config(void);
 [; ;config.h: 36: void eusart_config(void);
-[; ;pwm_con.h: 35: void pwm_set_duty2(int duty_cycle);
-[; ;pwm_con.h: 36: void pwm_set_duty3(int duty_cycle);
+[; ;pwm_con.h: 34: void buck_boost (int type, int dty );
+[; ;pwm_con.h: 35: void buck(int duty_cycle);
+[; ;pwm_con.h: 36: void boost(int duty_cycle);
 [; ;stdint.h: 13: typedef signed char int8_t;
 [; ;stdint.h: 20: typedef signed int int16_t;
 [; ;stdint.h: 28: typedef signed short long int int24_t;
@@ -6784,14 +6818,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 "18 main.c
 [v _a `i ~T0 @X0 1 e ]
 [v _c `i ~T0 @X0 1 e ]
+[v _d `i ~T0 @X0 1 e ]
 [v _fac `i ~T0 @X0 1 e ]
-[; ;main.c: 18: int a,c,fac;
+[; ;main.c: 18: int a,c,d,fac;
 "19
-[v _buck `ui ~T0 @X0 1 e ]
-[v _boost `ui ~T0 @X0 1 e ]
 [v _duty_boost `ui ~T0 @X0 1 e ]
 [v _duty_buck `ui ~T0 @X0 1 e ]
-[; ;main.c: 19: unsigned buck,boost,duty_boost,duty_buck;
+[; ;main.c: 19: unsigned duty_boost,duty_buck;
 "20
 [v _pasi `ui ~T0 @X0 1 e ]
 [v _dir `ui ~T0 @X0 1 e ]
@@ -6870,12 +6903,27 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 42: LATDbits.LD4=0;
 "42
 [e = . . _LATDbits 1 4 -> -> 0 `i `uc ]
+[; ;main.c: 45: ADCON0=0b00000011;
+"45
+[e = _ADCON0 -> -> 3 `i `uc ]
 [; ;main.c: 52: while(1)
 "52
 [e :U 852 ]
 [; ;main.c: 53: {
 "53
 {
+[; ;main.c: 54: ADCON0=0b00000011;
+"54
+[e = _ADCON0 -> -> 3 `i `uc ]
+[; ;main.c: 55: _delay((unsigned long)((10)*(64000000/4000.0)));
+"55
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;main.c: 56: ADCON0bits.GO=1;
+"56
+[e = . . _ADCON0bits 2 1 -> -> 1 `i `uc ]
+[; ;main.c: 57: _delay((unsigned long)((100)*(64000000/4000.0)));
+"57
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
 [; ;main.c: 60: rez_adc=ADRESH;
 "60
 [e = _rez_adc -> _ADRESH `i ]
@@ -6885,23 +6933,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 62: dty=rez_adc*0.39;
 "62
 [e = _dty -> * -> _rez_adc `d .0.39 `i ]
-[; ;main.c: 63: dty=75;
-"63
-[e = _dty -> 75 `i ]
-[; ;main.c: 75: pwm_set_duty3(75) ;
-"75
-[e ( _pwm_set_duty3 (1 -> 75 `i ]
-[; ;main.c: 76: pwm_set_duty2(75) ;
-"76
-[e ( _pwm_set_duty2 (1 -> 75 `i ]
-"121
+[; ;main.c: 64: buck_boost (2, dty );
+"64
+[e ( _buck_boost (2 , -> 2 `i _dty ]
+"105
 }
 [e :U 851 ]
 "52
 [e $U 852  ]
 [e :U 853 ]
-[; ;main.c: 121: }
-[; ;main.c: 122: }
-"122
+[; ;main.c: 105: }
+[; ;main.c: 106: }
+"106
 [e :UE 850 ]
 }

@@ -5,6 +5,8 @@
         <group>
             <file>file:/D:/Github/PIC18F46K22.X/config.c</file>
             <file>file:/D:/Github/PIC18F46K22.X/main.c</file>
+            <file>file:/D:/Github/PIC18F46K22.X/adc.c</file>
+            <file>file:/D:/Github/PIC18F46K22.X/pwm_con.h</file>
             <file>file:/D:/Github/PIC18F46K22.X/pwm_con.c</file>
         </group>
     </open-files>

@@ -10,31 +10,60 @@
 #include "bit_config.h"
 #include "config.h"
 
-int c,b,d,adcp,adcn;
-    
+int c,b,d,adcp,adcn,type,dty,buck,boost;
 
 
-void pwm_set_duty2(int duty_cycle)
+//
+//void buck(int duty_cycle)
+//{
+//	if(duty_cycle>100)
+//    {
+//    duty_cycle=100;
+//    }
+//    
+//	c=duty_cycle*1.7; 
+//	CCPR2L=c;
+//    
+//	
+//}
+//void boost(int duty_cycle)
+//{
+//	if(duty_cycle>100)
+//    {
+//    duty_cycle=100;
+//    }
+//    
+//	c=duty_cycle*1.7; 
+//	CCPR1L=c;
+//    
+//	
+//}
+
+void buck_boost (int type, int dty )
 {
-	if(duty_cycle>100)
+    if (type==1)
     {
-    duty_cycle=100;
+        CCPR1L=0;
+        	if(dty>100)
+    {
+    dty=100;
     }
     
-	c=duty_cycle*1.7; 
+	c=dty*1.7; 
 	CCPR2L=c;
-    
-	
-}
-void pwm_set_duty3(int duty_cycle)
-{
-	if(duty_cycle>100)
-    {
-    duty_cycle=100;
+        
     }
     
-	c=duty_cycle*1.7; 
-	CCPR1L=c;
+    if (type==2)
+    {
+        CCPR2L=0b11111111;
+        	if(dty>100)
+    {
+    dty=100;
+    }
     
-	
-}
+	c=dty*1.7; 
+	CCPR1L=c;
+        
+    }
+};

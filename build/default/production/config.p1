@@ -6784,9 +6784,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;config.c: 9: TRISD=0X00;
 "9
 [e = _TRISD -> -> 0 `i `uc ]
-[; ;config.c: 10: TRISE=0X00;
+[; ;config.c: 10: TRISE=0Xff;
 "10
-[e = _TRISE -> -> 0 `i `uc ]
+[e = _TRISE -> -> 255 `i `uc ]
 [; ;config.c: 12: PORTA=0X00;
 "12
 [e = _PORTA -> -> 0 `i `uc ]

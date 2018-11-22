@@ -31,9 +31,9 @@
 
 
 
-
-void pwm_set_duty2(int duty_cycle);
-void pwm_set_duty3(int duty_cycle);
+void buck_boost (int type, int dty );
+void buck(int duty_cycle);
+void boost(int duty_cycle);
 
 
 

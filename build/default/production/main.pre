@@ -8540,9 +8540,10 @@ void pwm_config(void);
 void adc_config(void);
 void eusart_config(void);
 
-# 35 "pwm_con.h"
-void pwm_set_duty2(int duty_cycle);
-void pwm_set_duty3(int duty_cycle);
+# 34 "pwm_con.h"
+void buck_boost (int type, int dty );
+void buck(int duty_cycle);
+void boost(int duty_cycle);
 
 # 13 "C:\Program Files (x86)\Microchip\xc8\v1.44\include\stdint.h"
 typedef signed char int8_t;
@@ -8756,8 +8757,8 @@ void stepper_move(unsigned directie, unsigned pasi);
 void interrupt gen_int(void);
 
 # 18 "main.c"
-int a,c,fac;
-unsigned buck,boost,duty_boost,duty_buck;
+int a,c,d,fac;
+unsigned duty_boost,duty_buck;
 unsigned int pasi,dir,nr_pasi,directie_2,go_stepper,start,pasi_int,sel_pasi,nt;
 char str[20];
 void main(void)
@@ -8782,21 +8783,25 @@ LATDbits.LD7=0;
 LATDbits.LD5=0;
 LATDbits.LD4=0;
 
+
+ADCON0=0b00000011;
+
 # 52
 while(1)
 {
+ADCON0=0b00000011;
+_delay((unsigned long)((10)*(64000000/4000.0)));
+ADCON0bits.GO=1;
+_delay((unsigned long)((100)*(64000000/4000.0)));
 
-# 60
+
 rez_adc=ADRESH;
 numar=rez_adc*0.0182;
 dty=rez_adc*0.39;
-dty=75;
 
-# 75
-pwm_set_duty3(75) ;
-pwm_set_duty2(75) ;
+buck_boost (2, dty );
 
-# 121
+# 105
 }
 }
 
