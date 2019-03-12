@@ -11,6 +11,7 @@
       <itemPath>stepper.h</itemPath>
       <itemPath>main.h</itemPath>
       <itemPath>i2c_display.h</itemPath>
+      <itemPath>MPPT.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

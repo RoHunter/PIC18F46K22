@@ -6,6 +6,7 @@
 #include <math.h>
 #include <stdio.h>
 #include "adc.h"
+#include "MPPT.h"
 
 
 #define   forward   1  
@@ -17,27 +18,21 @@
 #define   dir2  LATCbits.LATC4
 #define   br1  LATCbits.LATC5
 #define   br2  LATCbits.LATC6
-int fac;
 unsigned duty_boost,duty_buck;
 unsigned int pasi,dir,nr_pasi,directie_2,go_stepper,start,pasi_int,sel_pasi,nt;
 char str[20];
 void main(void)
 {
-    dir=0;
-    nt=0;
-    nr_pasi=0;
-    go_stepper=0;
-    start=0;
-    sel_pasi=0;
+    
    char pwm_buffer[20];
     config();
     pwm_config();
     adc_config();
     init_io_display();
     char str_V[8],str_A[8],str_P[8];
-    float tens,tens_A,curent,Power,Iout,Uout;
+    float tens,tens_A,curent,Power,Iout,Uout,Uin;
     int rez_adc_A,rez_adc_U;
-    int dty,rez_adc,tip,port;
+    int dty,rez_adc,tip,port,c=100;
     float numar;
     dty=0;
     port=0;
@@ -59,16 +54,11 @@ void main(void)
     {
         
 
-        buck_boost (2,50 );
+//        buck_boost (2,50 );
    if(port==0);
     {
-        ADCON0=0b00000111;
-        __delay_ms(10);
-        ADCON0bits.GO=1;
-        __delay_ms(100);
-        rez_adc_U=ADRESH;
-        tens=rez_adc_U*0.01953125;
-        Uout=tens/0.25;
+        read_Uout();
+        
         Lcd_Set_Cursor(1,1);
         Lcd_Write_String("U=");
         sprintf(str_V, "%.2f", tens);
@@ -82,13 +72,7 @@ void main(void)
     
     if(port==1);
     {   
-        ADCON0=0b00001011;
-        __delay_ms(10);
-        ADCON0bits.GO=1;
-        __delay_ms(100);
-        rez_adc_A=ADRESH;
-        tens_A=rez_adc_A*0.0181372549019608;
-        Iout=tens_A;
+        read_Iout();
         
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String("I=");
@@ -103,13 +87,8 @@ void main(void)
     }
 if(port==2);
     {   
-        ADCON0=0b00001111;
-        __delay_ms(10);
-        ADCON0bits.GO=1;
-        __delay_ms(100);
-        rez_adc_U=ADRESH;
-        tens=rez_adc_U*0.01953125;
-        tens=tens/0.2;
+        read_Uin();
+        
         Lcd_Set_Cursor(1,9);
         Lcd_Write_String("Ui=");
         sprintf(str_V, "%.2f", tens);
@@ -122,8 +101,28 @@ if(port==2);
          __delay_ms(100);
     }
 
-Power=Uout*Iout;
-
+//Power=Uout*Iout;
+if(Uin<12)
+{
+    CCPR1L=0;
+    Power=Uout*Iout; 
+    CCPR2L=c;
+        ADCON0=0b00001011;
+        __delay_ms(10);
+        ADCON0bits.GO=1;
+        __delay_ms(100);
+        rez_adc_A=ADRESH;
+        tens_A=rez_adc_A*0.0181372549019608;
+        Iout=tens_A;
+    
+        ADCON0=0b00000111;
+        __delay_ms(10);
+        ADCON0bits.GO=1;
+        __delay_ms(100);
+        rez_adc_U=ADRESH;
+        tens=rez_adc_U*0.01953125;
+        Uout=tens/0.25;
+}
 
 }
 }
