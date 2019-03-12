@@ -5,9 +5,9 @@ Linker command line:
 -W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v1.44\dat\en_msgs.txt -cs \
   -h+dist/default/production\PIC18F46K22.X.production.sym \
   --cmf=dist/default/production\PIC18F46K22.X.production.cmf -z -Q18F46K22 \
-  -oC:\Users\Silviu\AppData\Local\Temp\sf98.2 \
+  -oC:\Users\Silviu\AppData\Local\Temp\s5ko.2 \
   -Mdist/default/production/PIC18F46K22.X.production.map -E1 -ver=XC8 \
-  -ASTACK=0140h-0f37h -pstack=STACK -ACODE=00h-0FFFFh -ACONST=00h-0FFFFh \
+  -ASTACK=0154h-0f37h -pstack=STACK -ACODE=00h-0FFFFh -ACONST=00h-0FFFFh \
   -ASMALLCONST=01000h-010FFhx240 -AMEDIUMCONST=01000h-0FFFFh \
   -ACOMRAM=01h-05Fh -AABS1=00h-0F37h -ABIGRAM=01h-0F37h \
   -ARAM=060h-0FFh,0100h-01FFhx14,0F00h-0F37h -ABANK0=060h-0FFh \
@@ -26,7 +26,7 @@ Linker command line:
   -pfarbss=FARRAM,fardata=FARRAM,nvFARRAM=FARRAM \
   -pintsave_regs=BIGRAM,bigbss=BIGRAM,bigdata=BIGRAM -pbss=RAM \
   -pidata=CODE,irdata=CODE,ibigdata=CODE,ifardata=CODE -prparam=COMRAM \
-  C:\Users\Silviu\AppData\Local\Temp\sf98.obj \
+  C:\Users\Silviu\AppData\Local\Temp\s5ko.obj \
   dist/default/production\PIC18F46K22.X.production.obj 
 
 Object code version is 3.11
@@ -39,7 +39,7 @@ Call graph: (short form)
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\Silviu\AppData\Local\Temp\sf98.obj
+C:\Users\Silviu\AppData\Local\Temp\s5ko.obj
                 init                                  0        0        4        0       0
                 idloc                            200000   200000        8   200000       0
                 config                           300000   300000        E   300000       0
@@ -88,9 +88,9 @@ dist/default/production\PIC18F46K22.X.production.obj
                 text1                              1092     1092      708      849       0
                 text0                              1DF4     1DF4      250      849       0
                 cstackCOMRAM                          1        1       4E        1       1
-                cstackBANK0                          C0       C0       3F       60       1
-                bssBANK1                            100      100       40      100       1
-                bssBANK0                             60       60       60       60       1
+                cstackBANK0                          AF       AF       3F       60       1
+                bssBANK1                            100      100       54      100       1
+                bssBANK0                             60       60       4F       60       1
                 dataCOMRAM                           5E       5E        2        1       1
                 bssCOMRAM                            4F       4F        F        1       1
                 cinit                              2F26     2F26       46      849       0
@@ -165,11 +165,11 @@ TOTAL           Name                               Link     Load   Length     Sp
         CLASS   RAM            
 
         CLASS   BANK0          
-                cstackBANK0                          C0       C0       3F         1
-                bssBANK0                             60       60       60         1
+                cstackBANK0                          AF       AF       3F         1
+                bssBANK0                             60       60       4F         1
 
         CLASS   BANK1          
-                bssBANK1                            100      100       40         1
+                bssBANK1                            100      100       54         1
 
         CLASS   BANK2          
 
@@ -217,8 +217,8 @@ SEGMENTS        Name                           Load    Length   Top    Selector 
 
                 reset_vec                      000000  000004  000004         0       0  CODE    
                 cstackCOMRAM                   000001  00005F  000060         1       1  COMRAM  
-                bssBANK0                       000060  00009F  0000FF        60       1  BANK0   
-                bssBANK1                       000100  000040  000140       100       1  BANK1   
+                bssBANK0                       000060  00008E  0000EE        60       1  BANK0   
+                bssBANK1                       000100  000054  000154       100       1  BANK1   
                 smallconst                     001000  000092  001092       800       0  SMALLCON
                 text1                          001092  002054  0030E6       849       0  CODE    
                 idloc                          200000  000008  200008    200000       0  IDLOC   
@@ -228,8 +228,8 @@ SEGMENTS        Name                           Load    Length   Top    Selector 
 UNUSED ADDRESS RANGES
 
         Name                Unused          Largest block    Delta
-        BANK0            0000FF-0000FF                1
-        BANK1            000140-0001FF               C0
+        BANK0            0000EE-0000FF               12
+        BANK1            000154-0001FF               AC
         BANK10           000A00-000AFF              100
         BANK11           000B00-000BFF              100
         BANK12           000C00-000CFF              100
@@ -244,19 +244,19 @@ UNUSED ADDRESS RANGES
         BANK7            000700-0007FF              100
         BANK8            000800-0008FF              100
         BANK9            000900-0009FF              100
-        BIGRAM           0000FF-0000FF                1
-                         000140-000F37              DF8
+        BIGRAM           0000EE-0000FF               12
+                         000154-000F37              DE4
         CODE             000004-000FFF              FFC
                          0030E6-00FFFF             CF1A
         CONST            000004-000FFF              FFC
                          0030E6-00FFFF             CF1A
         EEDATA           F00000-F003FF              400
         MEDIUMCONST      0030E6-00FFFF             CF1A
-        RAM              0000FF-0000FF                1
-                         000140-000F37              100
+        RAM              0000EE-0000FF               12
+                         000154-000F37              100
         SFR              000F38-000FFF               28
         SMALLCONST       0030E6-00FFFF              100
-        STACK            000140-000F37              DF8
+        STACK            000154-000F37              DE4
 
                                   Symbol Table
 
@@ -320,7 +320,7 @@ _I2C_Master_Stop            text37       0030D4
 _I2C_Master_Wait            text39       00309C
 _I2C_Write_Display          text36       0030CA
 _INTCONbits                 (abs)        000FF2
-_Iout                       bssBANK0     000092
+_Iout                       bssBANK0     000071
 _LATA                       (abs)        000F89
 _LATB                       (abs)        000F8A
 _LATC                       (abs)        000F8B
@@ -363,8 +363,8 @@ _TRISE                      (abs)        000F96
 _UQEnd                      bssCOMRAM    00005C
 _UQFront                    bssCOMRAM    00005D
 _URBuff                     bssBANK1     000100
-_Uin                        bssBANK0     00008C
-_Uout                       bssBANK0     00008F
+_Uin                        bssBANK0     00006B
+_Uout                       bssBANK0     00006E
 __CFG_BOREN$OFF             (abs)        000000
 __CFG_BORV$190              (abs)        000000
 __CFG_CCP2MX$PORTC1         (abs)        000000
@@ -469,7 +469,7 @@ __Hrparam                   rparam       000000
 __Hsfr                      sfr          000000
 __Hsmallconst               smallconst   001092
 __Hspace_0                  (abs)        30000E
-__Hspace_1                  (abs)        000140
+__Hspace_1                  (abs)        000154
 __Hspace_2                  (abs)        000000
 __Hstack                    stack        000000
 __Hstruct                   struct       000000
@@ -632,7 +632,7 @@ __Ltext7                    text7        000000
 __Ltext8                    text8        000000
 __Ltext9                    text9        000000
 __S0                        (abs)        30000E
-__S1                        (abs)        000140
+__S1                        (abs)        000154
 __S2                        (abs)        000000
 ___awdiv                    text7        002976
 ___awdiv@counter            cstackCOMRAM 00000B
@@ -766,7 +766,7 @@ __pbssBANK0                 bssBANK0     000060
 __pbssBANK1                 bssBANK1     000100
 __pbssCOMRAM                bssCOMRAM    00004F
 __pcinit                    cinit        002F26
-__pcstackBANK0              cstackBANK0  0000C0
+__pcstackBANK0              cstackBANK0  0000AF
 __pcstackCOMRAM             cstackCOMRAM 000001
 __pdataCOMRAM               dataCOMRAM   00005E
 __pidataCOMRAM              idataCOMRAM  0030E4
@@ -865,35 +865,36 @@ __tdiv_to_l_@f1             cstackCOMRAM 000001
 __tdiv_to_l_@f2             cstackCOMRAM 000004
 __tdiv_to_l_@quot           cstackCOMRAM 00000A
 _adc_config                 text41       003082
-_adcn                       bssBANK0     0000A4
-_adcp                       bssBANK0     0000A6
-_b                          bssBANK0     0000AA
-_boost                      bssBANK0     00009C
-_buck                       bssBANK0     00009E
+_adcn                       bssBANK0     000083
+_adcp                       bssBANK0     000085
+_b                          bssBANK0     000089
+_boost                      bssBANK0     00007B
+_buck                       bssBANK0     00007D
 _c                          bssCOMRAM    000058
 _cnt                        dataCOMRAM   00005E
 _config                     text40       002E32
-_d                          bssBANK0     0000A8
-_data                       bssBANK0     000098
-_dir                        bssBANK0     0000BA
-_directie_2                 bssBANK0     0000B6
+_curent                     bssBANK0     000068
+_d                          bssBANK0     000087
+_data                       bssBANK0     000077
+_dir                        bssBANK0     000099
+_directie_2                 bssBANK0     000095
 _dpowers                    smallconst   001001
-_dty                        bssBANK0     0000A0
-_dty_car                    bssBANK0     00009A
+_dty                        bssBANK0     00007F
+_dty_car                    bssBANK0     000079
 _duty_boost                 bssCOMRAM    00005A
-_duty_buck                  bssBANK0     0000BE
+_duty_buck                  bssBANK0     00009D
 _fround                     text4        001BA2
-_fround$1531                cstackCOMRAM 00002A
-_fround$1532                cstackCOMRAM 000027
-_go_stepper                 bssBANK0     0000B4
+_fround$1555                cstackCOMRAM 00002A
+_fround$1556                cstackCOMRAM 000027
+_go_stepper                 bssBANK0     000093
 _init_io_display            text25       002C52
 _isdigit                    text3        003064
-_isdigit$1157               cstackCOMRAM 000002
+_isdigit$1172               cstackCOMRAM 000002
 _main                       text0        001DF4
-_nr_pasi                    bssBANK0     0000B8
-_nt                         bssBANK0     0000AC
-_pasi                       bssBANK0     0000BC
-_pasi_int                   bssBANK0     0000B0
+_nr_pasi                    bssBANK0     000097
+_nt                         bssBANK0     00008B
+_pasi                       bssBANK0     00009B
+_pasi_int                   bssBANK0     00008F
 _pwm_config                 text24       002FAC
 _read_Iout                  text20       002B6E
 _read_Uin                   text18       0028E6
@@ -901,18 +902,18 @@ _read_Uout                  text17       002856
 _rez_adc_A                  bssCOMRAM    000055
 _rez_adc_U                  bssCOMRAM    000052
 _scale                      text2        00179A
-_scale$1533                 cstackCOMRAM 000027
-_sel_pasi                   bssBANK0     0000AE
+_scale$1557                 cstackCOMRAM 000027
+_sel_pasi                   bssBANK0     00008D
 _sprintf                    text1        001092
-_sprintf$1534               cstackBANK0  0000C0
-_start                      bssBANK0     0000B2
-_str                        bssBANK0     000060
-_str_A                      bssBANK0     00007C
-_str_P                      bssBANK0     000074
-_str_V                      bssBANK0     000084
+_sprintf$1558               cstackBANK0  0000AF
+_start                      bssBANK0     000091
+_str                        bssBANK1     000140
+_str_A                      bssBANK0     00009F
+_str_P                      bssBANK0     000060
+_str_V                      bssBANK0     0000A7
 _tens                       bssCOMRAM    00004F
-_tens_A                     bssBANK0     000095
-_type                       bssBANK0     0000A2
+_tens_A                     bssBANK0     000074
+_type                       bssBANK0     000081
 end_of_initialization       cinit        002F62
 fround@prec                 cstackCOMRAM 00002D
 intlevel0                   text         000000
@@ -920,30 +921,30 @@ intlevel1                   text         000000
 intlevel2                   text         000000
 intlevel3                   text         000000
 isdigit@c                   cstackCOMRAM 000003
-main@Iout                   cstackBANK0  0000EF
-main@Power                  cstackBANK0  0000D7
-main@Uin                    cstackBANK0  0000F5
-main@Uout                   cstackBANK0  0000F2
-main@c                      cstackBANK0  0000F8
-main@curent                 cstackBANK0  0000EC
-main@dty                    cstackBANK0  0000DA
-main@port                   cstackBANK0  0000FD
-main@str_A                  cstackBANK0  0000DC
-main@str_V                  cstackBANK0  0000E4
-main@tens                   cstackBANK0  0000FA
+main@Iout                   cstackBANK0  0000DE
+main@Power                  cstackBANK0  0000C6
+main@Uin                    cstackBANK0  0000E4
+main@Uout                   cstackBANK0  0000E1
+main@c                      cstackBANK0  0000E7
+main@curent                 cstackBANK0  0000DB
+main@dty                    cstackBANK0  0000C9
+main@port                   cstackBANK0  0000EC
+main@str_A                  cstackBANK0  0000CB
+main@str_V                  cstackBANK0  0000D3
+main@tens                   cstackBANK0  0000E9
 scale@scl                   cstackCOMRAM 00002A
-sprintf@ap                  cstackBANK0  0000C3
-sprintf@c                   cstackBANK0  0000D6
-sprintf@exp                 cstackBANK0  0000CB
+sprintf@ap                  cstackBANK0  0000B2
+sprintf@c                   cstackBANK0  0000C5
+sprintf@exp                 cstackBANK0  0000BA
 sprintf@f                   cstackCOMRAM 000042
-sprintf@flag                cstackBANK0  0000C5
-sprintf@fval                cstackBANK0  0000D3
-sprintf@prec                cstackBANK0  0000D1
+sprintf@flag                cstackBANK0  0000B4
+sprintf@fval                cstackBANK0  0000C2
+sprintf@prec                cstackBANK0  0000C0
 sprintf@sp                  cstackCOMRAM 000040
-sprintf@tmpval              cstackBANK0  0000CD
-sprintf@val                 cstackBANK0  0000C7
+sprintf@tmpval              cstackBANK0  0000BC
+sprintf@val                 cstackBANK0  0000B6
 stackhi                     (abs)        000F37
-stacklo                     (abs)        000140
+stacklo                     (abs)        000154
 start                       init         000000
 start_initialization        cinit        002F26
 
@@ -1014,9 +1015,10 @@ Total ram usage:       42 bytes
 		line 492 in file "C:\Program Files (x86)\Microchip\xc8\v1.44\sources\common\doprnt.c"
  Parameters:    Size  Location     Type
   sp              2   63[COMRAM] PTR unsigned char 
-		 -> main@str_A(8), main@str_V(8), 
+		 -> str_A(8), str_V(8), main@str_A(8), main@str_V(8), 
   f               2   65[COMRAM] PTR const unsigned char 
-		 -> STR_7(5), STR_4(5), STR_2(5), 
+		 -> STR_16(5), STR_13(5), STR_11(5), STR_7(5), 
+		 -> STR_4(5), STR_2(5), 
  Auto vars:     Size  Location     Type
   tmpval          4   13[BANK0 ] struct .
   val             4    7[BANK0 ] unsigned long 
@@ -1066,6 +1068,9 @@ Total ram usage:       36 bytes
 		_scale
  This function is called by:
 		_main
+		_write_Uout
+		_write_Uin
+		_write_Iout
  This function uses a non-reentrant model
 
 
@@ -1850,8 +1855,10 @@ Total ram usage:        2 bytes
 		line 115 in file "i2c_display.c"
  Parameters:    Size  Location     Type
   a               2    7[COMRAM] PTR unsigned char 
-		 -> STR_9(5), STR_8(3), STR_6(4), STR_5(3), 
-		 -> main@str_A(8), STR_3(3), main@str_V(8), STR_1(3), 
+		 -> STR_17(3), str_A(8), STR_15(3), STR_14(3), 
+		 -> STR_12(4), str_V(8), STR_10(3), STR_9(5), 
+		 -> STR_8(3), STR_6(4), STR_5(3), main@str_A(8), 
+		 -> STR_3(3), main@str_V(8), STR_1(3), 
  Auto vars:     Size  Location     Type
   i               2   11[COMRAM] int 
  Return value:  Size  Location     Type
@@ -1875,6 +1882,9 @@ Total ram usage:        6 bytes
  This function is called by:
 		_main
 		_init_io_display
+		_write_Uout
+		_write_Uin
+		_write_Iout
  This function uses a non-reentrant model
 
 
@@ -1942,6 +1952,9 @@ Total ram usage:        5 bytes
  This function is called by:
 		_main
 		_init_io_display
+		_write_Uout
+		_write_Uin
+		_write_Iout
  This function uses a non-reentrant model
 
 

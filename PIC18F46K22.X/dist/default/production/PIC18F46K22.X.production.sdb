@@ -57,7 +57,7 @@
 [v ___wmul __wmul `(ui  1 e 2 0 ]
 "15 C:\Program Files (x86)\Microchip\xc8\v1.44\sources\common\Umul32.c
 [v ___lmul __lmul `(ul  1 e 4 0 ]
-"7 D:\Github\PIC18F46K22.X\config.c
+"7 D:\Github\PIC18F46K22\PIC18F46K22.X\config.c
 [v _config config `(v  1 e 1 0 ]
 "46
 [v _pwm_config pwm_config `(v  1 e 1 0 ]
@@ -65,7 +65,7 @@
 [v _adc_config adc_config `(v  1 e 1 0 ]
 "88
 [v _init_io_display init_io_display `(v  1 e 1 0 ]
-"20 D:\Github\PIC18F46K22.X\i2c_display.c
+"20 D:\Github\PIC18F46K22\PIC18F46K22.X\i2c_display.c
 [v _Lcd_Port Lcd_Port `(v  1 e 1 0 ]
 "26
 [v _Lcd_Cmd Lcd_Cmd `(v  1 e 1 0 ]
@@ -91,16 +91,20 @@
 [v _I2C_Master_Stop I2C_Master_Stop `(v  1 e 1 0 ]
 "207
 [v _I2C_Write_Display I2C_Write_Display `(v  1 e 1 0 ]
-"16 D:\Github\PIC18F46K22.X\main.c
+"16 D:\Github\PIC18F46K22\PIC18F46K22.X\main.c
 [v _main main `(v  1 e 1 0 ]
-"15 D:\Github\PIC18F46K22.X\MPPT.c
+"15 D:\Github\PIC18F46K22\PIC18F46K22.X\MPPT.c
 [v _read_Iout read_Iout `(v  1 e 1 0 ]
 "28
 [v _read_Uout read_Uout `(v  1 e 1 0 ]
 "39
 [v _read_Uin read_Uin `(v  1 e 1 0 ]
-"14 D:\Github\PIC18F46K22.X\afis_dispay.c
+"15 D:\Github\PIC18F46K22\PIC18F46K22.X\afis_display.c
+[v _str_V str_V `[8]uc  1 e 8 0 ]
+[v _str_A str_A `[8]uc  1 e 8 0 ]
+"16
 [v _tens tens `f  1 e 3 0 ]
+[v _curent curent `f  1 e 3 0 ]
 "50 C:\Program Files (x86)\Microchip\xc8\v1.44\include\pic18f46k22.h
 [v _ANSELA ANSELA `VEuc  1 e 1 @3896 ]
 [s S316 . 1 `uc 1 ANSA0 1 0 :1:0 
@@ -419,24 +423,24 @@
 [v __powers_ _powers_ `C[13]d  1 e 39 0 ]
 "39
 [v __npowers_ _npowers_ `C[13]d  1 e 39 0 ]
-"13 D:\Github\PIC18F46K22.X\MPPT.c
+"13 D:\Github\PIC18F46K22\PIC18F46K22.X\MPPT.c
 [v _rez_adc_A rez_adc_A `f  1 e 3 0 ]
 [v _tens_A tens_A `f  1 e 3 0 ]
 [v _Iout Iout `f  1 e 3 0 ]
 [v _rez_adc_U rez_adc_U `f  1 e 3 0 ]
 [v _Uout Uout `f  1 e 3 0 ]
 [v _Uin Uin `f  1 e 3 0 ]
-"13 D:\Github\PIC18F46K22.X\pwm_con.c
+"13 D:\Github\PIC18F46K22\PIC18F46K22.X\pwm_con.c
 [v _c c `i  1 e 2 0 ]
-"14 D:\Github\PIC18F46K22.X\stepper.c
+"14 D:\Github\PIC18F46K22\PIC18F46K22.X\stepper.c
 [v _cnt cnt `ui  1 e 2 0 ]
-"38 D:\Github\PIC18F46K22.X\usart_pic16.h
+"38 D:\Github\PIC18F46K22\PIC18F46K22.X\usart_pic16.h
 [v _URBuff URBuff `VE[64]uc  1 e 64 0 ]
 "39
 [v _UQFront UQFront `VEc  1 e 1 0 ]
 "40
 [v _UQEnd UQEnd `VEc  1 e 1 0 ]
-"16 D:\Github\PIC18F46K22.X\main.c
+"16 D:\Github\PIC18F46K22\PIC18F46K22.X\main.c
 [v _main main `(v  1 e 1 0 ]
 {
 "24
@@ -458,9 +462,9 @@
 "492 C:\Program Files (x86)\Microchip\xc8\v1.44\sources\common\doprnt.c
 [v _sprintf sprintf `(i  1 e 2 0 ]
 {
-[u S921 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
+[u S936 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
 "526
-[v sprintf@tmpval tmpval `S921  1 a 4 13 ]
+[v sprintf@tmpval tmpval `S936  1 a 4 13 ]
 "528
 [v sprintf@val val `ul  1 a 4 7 ]
 "516
@@ -630,7 +634,7 @@
 [v ___ftge@ff2 ff2 `f  1 p 3 3 ]
 "13
 } 0
-"28 D:\Github\PIC18F46K22.X\MPPT.c
+"28 D:\Github\PIC18F46K22\PIC18F46K22.X\MPPT.c
 [v _read_Uout read_Uout `(v  1 e 1 0 ]
 {
 "38
@@ -654,7 +658,7 @@
 [v ___ftdiv@f2 f2 `f  1 p 3 11 ]
 "86
 } 0
-"15 D:\Github\PIC18F46K22.X\MPPT.c
+"15 D:\Github\PIC18F46K22\PIC18F46K22.X\MPPT.c
 [v _read_Iout read_Iout `(v  1 e 1 0 ]
 {
 "24
@@ -690,7 +694,7 @@
 [v ___ftpack@sign sign `uc  1 p 1 4 ]
 "86
 } 0
-"46 D:\Github\PIC18F46K22.X\config.c
+"46 D:\Github\PIC18F46K22\PIC18F46K22.X\config.c
 [v _pwm_config pwm_config `(v  1 e 1 0 ]
 {
 "60
@@ -700,7 +704,7 @@
 {
 "100
 } 0
-"115 D:\Github\PIC18F46K22.X\i2c_display.c
+"115 D:\Github\PIC18F46K22\PIC18F46K22.X\i2c_display.c
 [v _Lcd_Write_String Lcd_Write_String `(v  1 e 1 0 ]
 {
 "117
@@ -765,7 +769,7 @@
 [v ___lldiv@divisor divisor `ul  1 p 4 4 ]
 "31
 } 0
-"140 D:\Github\PIC18F46K22.X\i2c_display.c
+"140 D:\Github\PIC18F46K22\PIC18F46K22.X\i2c_display.c
 [v _Cursor_Off Cursor_Off `(v  1 e 1 0 ]
 {
 "144
@@ -812,7 +816,7 @@
 {
 "181
 } 0
-"7 D:\Github\PIC18F46K22.X\config.c
+"7 D:\Github\PIC18F46K22\PIC18F46K22.X\config.c
 [v _config config `(v  1 e 1 0 ]
 {
 "44
