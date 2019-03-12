@@ -8567,7 +8567,71 @@ void adc_config(void);
 void eusart_config(void);
 void init_io_display(void);
 
-# 13 "MPPT.c"
+# 4 "C:\Program Files (x86)\Microchip\xc8\v1.44\include\__size_t.h"
+typedef unsigned size_t;
+
+# 7 "C:\Program Files (x86)\Microchip\xc8\v1.44\include\stdarg.h"
+typedef void * va_list[1];
+
+#pragma intrinsic(__va_start)
+extern void * __va_start(void);
+
+#pragma intrinsic(__va_arg)
+extern void * __va_arg(void *, ...);
+
+# 43 "C:\Program Files (x86)\Microchip\xc8\v1.44\include\stdio.h"
+struct __prbuf
+{
+char * ptr;
+void (* func)(char);
+};
+
+# 29 "C:\Program Files (x86)\Microchip\xc8\v1.44\include\errno.h"
+extern int errno;
+
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.44\include\conio.h"
+extern void init_uart(void);
+
+extern char getch(void);
+extern char getche(void);
+extern void putch(char);
+extern void ungetch(char);
+
+extern __bit kbhit(void);
+
+# 23
+extern char * cgets(char *);
+extern void cputs(const char *);
+
+# 88 "C:\Program Files (x86)\Microchip\xc8\v1.44\include\stdio.h"
+extern int cprintf(char *, ...);
+#pragma printf_check(cprintf)
+
+
+
+extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+
+
+# 180
+#pragma printf_check(vprintf) const
+#pragma printf_check(vsprintf) const
+
+extern char * gets(char *);
+extern int puts(const char *);
+extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+
+#pragma printf_check(printf) const
+#pragma printf_check(sprintf) const
+extern int sprintf(char *, const char *, ...);
+extern int printf(const char *, ...);
+
+# 14 "MPPT.c"
+char str_V[8],str_A[8],str_P[8];
 float rez_adc_A,tens_A,Iout,rez_adc_U,tens,Uout,Uin;
 
 void read_Iout(void)
@@ -8579,6 +8643,12 @@ _delay((unsigned long)((100)*(64000000/4000.0)));
 rez_adc_A=ADRESH;
 tens_A=rez_adc_A*0.0181372549019608;
 Iout=tens_A;
+Lcd_Set_Cursor(2,1);
+Lcd_Write_String("I=");
+sprintf(str_A, "%.2f", Iout);
+Lcd_Set_Cursor(2,3);
+Lcd_Write_String(str_A);
+Lcd_Write_String(" A");
 }
 
 
@@ -8592,7 +8662,11 @@ _delay((unsigned long)((100)*(64000000/4000.0)));
 rez_adc_U=ADRESH;
 tens=rez_adc_U*0.01953125;
 Uout=tens/0.25;
-
+Lcd_Set_Cursor(1,1);
+Lcd_Write_String("U=");
+sprintf(str_V, "%.2f", Uout);
+Lcd_Set_Cursor(1,3);
+Lcd_Write_String(str_V);
 }
 void read_Uin(void)
 {
@@ -8603,4 +8677,10 @@ _delay((unsigned long)((100)*(64000000/4000.0)));
 rez_adc_U=ADRESH;
 tens=rez_adc_U*0.01953125;
 Uin=tens/0.2;
+Lcd_Set_Cursor(1,9);
+Lcd_Write_String("Ui=");
+sprintf(str_V, "%.2f", Uin);
+Lcd_Set_Cursor(1,12);
+Lcd_Write_String(str_V);
+Lcd_Write_String(" V");
 }

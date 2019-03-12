@@ -29,6 +29,6 @@
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 
-void write_Uout();
+void write_Uout(float U_val);
 void write_Uin();
 void write_Iout();

@@ -12,7 +12,6 @@
       <itemPath>main.h</itemPath>
       <itemPath>i2c_display.h</itemPath>
       <itemPath>MPPT.h</itemPath>
-      <itemPath>afis_display.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -29,7 +28,6 @@
       <itemPath>adc.c</itemPath>
       <itemPath>i2c_display.c</itemPath>
       <itemPath>MPPT.c</itemPath>
-      <itemPath>afis_dispay.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

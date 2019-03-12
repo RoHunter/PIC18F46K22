@@ -15,7 +15,7 @@
 char str_V[8],str_A[8],str_P[8];
 float tens,curent;
 
-void write_Uout()
+void write_Uout(float U_val)
 {
         Lcd_Set_Cursor(1,1);
         Lcd_Write_String("U=");

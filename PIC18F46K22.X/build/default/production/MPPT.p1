@@ -36,6 +36,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADCON0bits `VS642 ~T0 @X0 0 e@4034 ]
 "13761
 [v _ADRESH `Vuc ~T0 @X0 0 e@4036 ]
+"48 i2c_display.h
+[v _Lcd_Set_Cursor `(v ~T0 @X0 0 ef2`uc`uc ]
+"51
+[v _Lcd_Write_String `(v ~T0 @X0 0 ef1`*uc ]
+"194 C:\Program Files (x86)\Microchip\xc8\v1.44\include\stdio.h
+[v _sprintf `(i ~T0 @X0 0 e1v`*uc`*Cuc ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -6701,7 +6707,42 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;config.h: 40: void adc_config(void);
 [; ;config.h: 41: void eusart_config(void);
 [; ;config.h: 42: void init_io_display(void);
-"13 MPPT.c
+[; ;__size_t.h: 4: typedef unsigned size_t;
+[; ;stdarg.h: 7: typedef void * va_list[1];
+[; ;stdarg.h: 10: extern void * __va_start(void);
+[; ;stdarg.h: 13: extern void * __va_arg(void *, ...);
+[; ;stdio.h: 43: struct __prbuf
+[; ;stdio.h: 44: {
+[; ;stdio.h: 45: char * ptr;
+[; ;stdio.h: 46: void (* func)(char);
+[; ;stdio.h: 47: };
+[; ;errno.h: 29: extern int errno;
+[; ;conio.h: 12: extern void init_uart(void);
+[; ;conio.h: 14: extern char getch(void);
+[; ;conio.h: 15: extern char getche(void);
+[; ;conio.h: 16: extern void putch(char);
+[; ;conio.h: 17: extern void ungetch(char);
+[; ;conio.h: 19: extern __bit kbhit(void);
+[; ;conio.h: 23: extern char * cgets(char *);
+[; ;conio.h: 24: extern void cputs(const char *);
+[; ;stdio.h: 88: extern int cprintf(char *, ...);
+[; ;stdio.h: 93: extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+[; ;stdio.h: 183: extern char * gets(char *);
+[; ;stdio.h: 184: extern int puts(const char *);
+[; ;stdio.h: 185: extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+[; ;stdio.h: 186: extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+[; ;stdio.h: 187: extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+[; ;stdio.h: 188: extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+[; ;stdio.h: 189: extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+[; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+[; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
+[; ;stdio.h: 195: extern int printf(const char *, ...);
+"14 MPPT.c
+[v _str_V `uc ~T0 @X0 -> 8 `i e ]
+[v _str_A `uc ~T0 @X0 -> 8 `i e ]
+[v _str_P `uc ~T0 @X0 -> 8 `i e ]
+[; ;MPPT.c: 14: char str_V[8],str_A[8],str_P[8];
+"15
 [v _rez_adc_A `f ~T0 @X0 1 e ]
 [v _tens_A `f ~T0 @X0 1 e ]
 [v _Iout `f ~T0 @X0 1 e ]
@@ -6709,103 +6750,163 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _tens `f ~T0 @X0 1 e ]
 [v _Uout `f ~T0 @X0 1 e ]
 [v _Uin `f ~T0 @X0 1 e ]
-[; ;MPPT.c: 13: float rez_adc_A,tens_A,Iout,rez_adc_U,tens,Uout,Uin;
-"15
+[; ;MPPT.c: 15: float rez_adc_A,tens_A,Iout,rez_adc_U,tens,Uout,Uin;
+"17
 [v _read_Iout `(v ~T0 @X0 1 ef ]
-"16
+"18
 {
-[; ;MPPT.c: 15: void read_Iout(void)
-[; ;MPPT.c: 16: {
+[; ;MPPT.c: 17: void read_Iout(void)
+[; ;MPPT.c: 18: {
 [e :U _read_Iout ]
 [f ]
-[; ;MPPT.c: 17: ADCON0=0b00001011;
-"17
-[e = _ADCON0 -> -> 11 `i `uc ]
-[; ;MPPT.c: 18: _delay((unsigned long)((10)*(64000000/4000.0)));
-"18
-[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
-[; ;MPPT.c: 19: ADCON0bits.GO=1;
+[; ;MPPT.c: 19: ADCON0=0b00001011;
 "19
-[e = . . _ADCON0bits 2 1 -> -> 1 `i `uc ]
-[; ;MPPT.c: 20: _delay((unsigned long)((100)*(64000000/4000.0)));
+[e = _ADCON0 -> -> 11 `i `uc ]
+[; ;MPPT.c: 20: _delay((unsigned long)((10)*(64000000/4000.0)));
 "20
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
-[; ;MPPT.c: 21: rez_adc_A=ADRESH;
-"21
-[e = _rez_adc_A -> _ADRESH `f ]
-[; ;MPPT.c: 22: tens_A=rez_adc_A*0.0181372549019608;
-"22
-[e = _tens_A -> * -> _rez_adc_A `d .0.0181372549019608 `f ]
-[; ;MPPT.c: 23: Iout=tens_A;
-"23
-[e = _Iout _tens_A ]
-[; ;MPPT.c: 24: }
-"24
-[e :UE 849 ]
-}
-"28
-[v _read_Uout `(v ~T0 @X0 1 ef ]
-"29
-{
-[; ;MPPT.c: 28: void read_Uout(void)
-[; ;MPPT.c: 29: {
-[e :U _read_Uout ]
-[f ]
-[; ;MPPT.c: 30: ADCON0=0b00000111;
-"30
-[e = _ADCON0 -> -> 7 `i `uc ]
-[; ;MPPT.c: 31: _delay((unsigned long)((10)*(64000000/4000.0)));
-"31
 [e ( __delay (1 -> * -> -> 10 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
-[; ;MPPT.c: 32: ADCON0bits.GO=1;
-"32
+[; ;MPPT.c: 21: ADCON0bits.GO=1;
+"21
 [e = . . _ADCON0bits 2 1 -> -> 1 `i `uc ]
-[; ;MPPT.c: 33: _delay((unsigned long)((100)*(64000000/4000.0)));
-"33
+[; ;MPPT.c: 22: _delay((unsigned long)((100)*(64000000/4000.0)));
+"22
 [e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
-[; ;MPPT.c: 34: rez_adc_U=ADRESH;
-"34
-[e = _rez_adc_U -> _ADRESH `f ]
-[; ;MPPT.c: 35: tens=rez_adc_U*0.01953125;
-"35
-[e = _tens -> * -> _rez_adc_U `d .0.01953125 `f ]
-[; ;MPPT.c: 36: Uout=tens/0.25;
-"36
-[e = _Uout -> / -> _tens `d .0.25 `f ]
-[; ;MPPT.c: 38: }
-"38
+[; ;MPPT.c: 23: rez_adc_A=ADRESH;
+"23
+[e = _rez_adc_A -> _ADRESH `f ]
+[; ;MPPT.c: 24: tens_A=rez_adc_A*0.0181372549019608;
+"24
+[e = _tens_A -> * -> _rez_adc_A `d .0.0181372549019608 `f ]
+[; ;MPPT.c: 25: Iout=tens_A;
+"25
+[e = _Iout _tens_A ]
+[; ;MPPT.c: 26: Lcd_Set_Cursor(2,1);
+"26
+[e ( _Lcd_Set_Cursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;MPPT.c: 27: Lcd_Write_String("I=");
+"27
+[e ( _Lcd_Write_String (1 -> :s 1C `*uc ]
+[; ;MPPT.c: 28: sprintf(str_A, "%.2f", Iout);
+"28
+[e ( _sprintf (1 , (. , &U _str_A :s 2C -> _Iout `d ]
+[; ;MPPT.c: 29: Lcd_Set_Cursor(2,3);
+"29
+[e ( _Lcd_Set_Cursor (2 , -> -> 2 `i `uc -> -> 3 `i `uc ]
+[; ;MPPT.c: 30: Lcd_Write_String(str_A);
+"30
+[e ( _Lcd_Write_String (1 &U _str_A ]
+[; ;MPPT.c: 31: Lcd_Write_String(" A");
+"31
+[e ( _Lcd_Write_String (1 -> :s 3C `*uc ]
+[; ;MPPT.c: 32: }
+"32
 [e :UE 850 ]
 }
-"39
-[v _read_Uin `(v ~T0 @X0 1 ef ]
-"40
+"36
+[v _read_Uout `(v ~T0 @X0 1 ef ]
+"37
 {
-[; ;MPPT.c: 39: void read_Uin(void)
-[; ;MPPT.c: 40: {
-[e :U _read_Uin ]
+[; ;MPPT.c: 36: void read_Uout(void)
+[; ;MPPT.c: 37: {
+[e :U _read_Uout ]
 [f ]
-[; ;MPPT.c: 41: ADCON0=0b00001111;
-"41
-[e = _ADCON0 -> -> 15 `i `uc ]
-[; ;MPPT.c: 42: _delay((unsigned long)((10)*(64000000/4000.0)));
-"42
+[; ;MPPT.c: 38: ADCON0=0b00000111;
+"38
+[e = _ADCON0 -> -> 7 `i `uc ]
+[; ;MPPT.c: 39: _delay((unsigned long)((10)*(64000000/4000.0)));
+"39
 [e ( __delay (1 -> * -> -> 10 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
-[; ;MPPT.c: 43: ADCON0bits.GO=1;
-"43
+[; ;MPPT.c: 40: ADCON0bits.GO=1;
+"40
 [e = . . _ADCON0bits 2 1 -> -> 1 `i `uc ]
-[; ;MPPT.c: 44: _delay((unsigned long)((100)*(64000000/4000.0)));
-"44
+[; ;MPPT.c: 41: _delay((unsigned long)((100)*(64000000/4000.0)));
+"41
 [e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
-[; ;MPPT.c: 45: rez_adc_U=ADRESH;
-"45
+[; ;MPPT.c: 42: rez_adc_U=ADRESH;
+"42
 [e = _rez_adc_U -> _ADRESH `f ]
-[; ;MPPT.c: 46: tens=rez_adc_U*0.01953125;
-"46
+[; ;MPPT.c: 43: tens=rez_adc_U*0.01953125;
+"43
 [e = _tens -> * -> _rez_adc_U `d .0.01953125 `f ]
-[; ;MPPT.c: 47: Uin=tens/0.2;
+[; ;MPPT.c: 44: Uout=tens/0.25;
+"44
+[e = _Uout -> / -> _tens `d .0.25 `f ]
+[; ;MPPT.c: 45: Lcd_Set_Cursor(1,1);
+"45
+[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;MPPT.c: 46: Lcd_Write_String("U=");
+"46
+[e ( _Lcd_Write_String (1 -> :s 4C `*uc ]
+[; ;MPPT.c: 47: sprintf(str_V, "%.2f", Uout);
 "47
-[e = _Uin -> / -> _tens `d .0.2 `f ]
-[; ;MPPT.c: 48: }
+[e ( _sprintf (1 , (. , &U _str_V :s 5C -> _Uout `d ]
+[; ;MPPT.c: 48: Lcd_Set_Cursor(1,3);
 "48
+[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 3 `i `uc ]
+[; ;MPPT.c: 49: Lcd_Write_String(str_V);
+"49
+[e ( _Lcd_Write_String (1 &U _str_V ]
+[; ;MPPT.c: 50: }
+"50
 [e :UE 851 ]
 }
+"51
+[v _read_Uin `(v ~T0 @X0 1 ef ]
+"52
+{
+[; ;MPPT.c: 51: void read_Uin(void)
+[; ;MPPT.c: 52: {
+[e :U _read_Uin ]
+[f ]
+[; ;MPPT.c: 53: ADCON0=0b00001111;
+"53
+[e = _ADCON0 -> -> 15 `i `uc ]
+[; ;MPPT.c: 54: _delay((unsigned long)((10)*(64000000/4000.0)));
+"54
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;MPPT.c: 55: ADCON0bits.GO=1;
+"55
+[e = . . _ADCON0bits 2 1 -> -> 1 `i `uc ]
+[; ;MPPT.c: 56: _delay((unsigned long)((100)*(64000000/4000.0)));
+"56
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;MPPT.c: 57: rez_adc_U=ADRESH;
+"57
+[e = _rez_adc_U -> _ADRESH `f ]
+[; ;MPPT.c: 58: tens=rez_adc_U*0.01953125;
+"58
+[e = _tens -> * -> _rez_adc_U `d .0.01953125 `f ]
+[; ;MPPT.c: 59: Uin=tens/0.2;
+"59
+[e = _Uin -> / -> _tens `d .0.2 `f ]
+[; ;MPPT.c: 60: Lcd_Set_Cursor(1,9);
+"60
+[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 9 `i `uc ]
+[; ;MPPT.c: 61: Lcd_Write_String("Ui=");
+"61
+[e ( _Lcd_Write_String (1 -> :s 6C `*uc ]
+[; ;MPPT.c: 62: sprintf(str_V, "%.2f", Uin);
+"62
+[e ( _sprintf (1 , (. , &U _str_V :s 7C -> _Uin `d ]
+[; ;MPPT.c: 63: Lcd_Set_Cursor(1,12);
+"63
+[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 12 `i `uc ]
+[; ;MPPT.c: 64: Lcd_Write_String(str_V);
+"64
+[e ( _Lcd_Write_String (1 &U _str_V ]
+[; ;MPPT.c: 65: Lcd_Write_String(" V");
+"65
+[e ( _Lcd_Write_String (1 -> :s 8C `*uc ]
+[; ;MPPT.c: 66: }
+"66
+[e :UE 852 ]
+}
+[p f _sprintf 8462336 ]
+[a 2C 37 46 50 102 0 ]
+[a 5C 37 46 50 102 0 ]
+[a 7C 37 46 50 102 0 ]
+[a 8C 32 86 0 ]
+[a 3C 32 65 0 ]
+[a 6C 85 105 61 0 ]
+[a 4C 85 61 0 ]
+[a 1C 73 61 0 ]
