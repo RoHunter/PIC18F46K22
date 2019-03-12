@@ -4,6 +4,7 @@
 #include "config.h"
 #include <math.h>
 #include <stdio.h>
+
 #define inainte_var 1  
 #define inapoi_var  2
 #define negru LATDbits.LD6

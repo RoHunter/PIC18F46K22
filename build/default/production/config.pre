@@ -8473,11 +8473,38 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 33 "config.h"
+# 34 "i2c_display.h"
+void I2C_Master_Init(const unsigned long c);
+void I2C_Master_Wait();
+void I2C_Master_Start();
+void I2C_Master_RepeatedStart();
+void I2C_Master_Stop();
+void I2C_Master_Write(unsigned d);
+void I2C_Write_Display(unsigned d);
+
+unsigned short I2C_Master_Read(unsigned short a);
+
+
+void Lcd_Port(char data);
+void Lcd_Cmd(char a);
+void Lcd_Clear();
+void Lcd_Set_Cursor(char a, char b);
+void Lcd_Init();
+void Lcd_Write_Char(char a);
+void Lcd_Write_String(char *a);
+void Lcd_Shift_Right();
+void Lcd_Shift_Left();
+void Cursor_On();
+void Cursor_Off();
+void Cursor_Left();
+void Cursor_Right();
+
+# 39 "config.h"
 void config(void);
 void pwm_config(void);
 void adc_config(void);
 void eusart_config(void);
+void init_io_display(void);
 
 # 13 "C:\Program Files (x86)\Microchip\xc8\v1.44\include\stdint.h"
 typedef signed char int8_t;
@@ -8593,10 +8620,71 @@ void USART2WriteString(const char *str);
 void USART2GotoNewLine();
 void USART2WriteInt(int16_t val, int8_t field_length);
 
-# 4 "config.c"
+
+# 7 "bit_config.h"
+#pragma config FOSC = INTIO67
+#pragma config PLLCFG = ON
+#pragma config PRICLKEN = OFF
+#pragma config FCMEN = OFF
+#pragma config IESO = OFF
+
+
+#pragma config PWRTEN = OFF
+#pragma config BOREN = OFF
+#pragma config BORV = 190
+
+
+#pragma config WDTEN = OFF
+#pragma config WDTPS = 32768
+
+
+#pragma config CCP2MX = PORTC1
+#pragma config PBADEN = ON
+#pragma config CCP3MX = PORTB5
+#pragma config HFOFST = ON
+#pragma config T3CMX = PORTC0
+#pragma config P2BMX = PORTD2
+#pragma config MCLRE = EXTMCLR
+
+
+#pragma config STVREN = OFF
+#pragma config LVP = OFF
+#pragma config XINST = OFF
+
+
+#pragma config CP0 = OFF
+#pragma config CP1 = OFF
+#pragma config CP2 = OFF
+#pragma config CP3 = OFF
+
+
+#pragma config CPB = OFF
+#pragma config CPD = OFF
+
+
+#pragma config WRT0 = OFF
+#pragma config WRT1 = OFF
+#pragma config WRT2 = OFF
+#pragma config WRT3 = OFF
+
+
+#pragma config WRTC = OFF
+#pragma config WRTB = OFF
+#pragma config WRTD = OFF
+
+
+#pragma config EBTR0 = OFF
+#pragma config EBTR1 = OFF
+#pragma config EBTR2 = OFF
+#pragma config EBTR3 = OFF
+
+
+#pragma config EBTRB = OFF
+
+# 7 "config.c"
 void config(void)
 {
-TRISA=0X00;
+TRISA=0Xff;
 TRISB=0X00;
 TRISC=0X00;
 TRISD=0X00;
@@ -8614,7 +8702,7 @@ LATC=0X00;
 LATD=0X00;
 LATE=0X00;
 
-ANSELA=0X00;
+ANSELA=0Xff;
 ANSELB=0X00;
 ANSELC=0X00;
 ANSELD=0X00;
@@ -8623,7 +8711,7 @@ ANSELE=0X00;
 OSCCON=0b01110100;
 OSCTUNEbits.PLLEN=1;
 
-# 41
+# 44
 }
 
 void pwm_config(void)
@@ -8668,3 +8756,16 @@ PIE1bits.RC1IE=1;
 
 }
 
+void init_io_display()
+{
+TRISCbits.TRISC3=1;
+TRISCbits.TRISC4=1;
+I2C_Master_Init(100000);
+_delay((unsigned long)((100)*(64000000/4000.0)));
+Lcd_Init();
+Lcd_Clear();
+Cursor_Off();
+Lcd_Set_Cursor(1,1);
+Lcd_Write_String("Test");
+_delay((unsigned long)((100)*(64000000/4000.0)));
+}

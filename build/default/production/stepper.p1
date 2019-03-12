@@ -6612,7 +6612,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "29
 [p x MCLRE=EXTMCLR ]
 "32
-[p x STVREN=ON ]
+[p x STVREN=OFF ]
 "33
 [p x LVP=OFF ]
 "34
@@ -6653,10 +6653,32 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p x EBTR3=OFF ]
 "64
 [p x EBTRB=OFF ]
-[; ;config.h: 33: void config(void);
-[; ;config.h: 34: void pwm_config(void);
-[; ;config.h: 35: void adc_config(void);
-[; ;config.h: 36: void eusart_config(void);
+[; ;i2c_display.h: 34: void I2C_Master_Init(const unsigned long c);
+[; ;i2c_display.h: 35: void I2C_Master_Wait();
+[; ;i2c_display.h: 36: void I2C_Master_Start();
+[; ;i2c_display.h: 37: void I2C_Master_RepeatedStart();
+[; ;i2c_display.h: 38: void I2C_Master_Stop();
+[; ;i2c_display.h: 39: void I2C_Master_Write(unsigned d);
+[; ;i2c_display.h: 40: void I2C_Write_Display(unsigned d);
+[; ;i2c_display.h: 42: unsigned short I2C_Master_Read(unsigned short a);
+[; ;i2c_display.h: 45: void Lcd_Port(char data);
+[; ;i2c_display.h: 46: void Lcd_Cmd(char a);
+[; ;i2c_display.h: 47: void Lcd_Clear();
+[; ;i2c_display.h: 48: void Lcd_Set_Cursor(char a, char b);
+[; ;i2c_display.h: 49: void Lcd_Init();
+[; ;i2c_display.h: 50: void Lcd_Write_Char(char a);
+[; ;i2c_display.h: 51: void Lcd_Write_String(char *a);
+[; ;i2c_display.h: 52: void Lcd_Shift_Right();
+[; ;i2c_display.h: 53: void Lcd_Shift_Left();
+[; ;i2c_display.h: 54: void Cursor_On();
+[; ;i2c_display.h: 55: void Cursor_Off();
+[; ;i2c_display.h: 56: void Cursor_Left();
+[; ;i2c_display.h: 57: void Cursor_Right();
+[; ;config.h: 39: void config(void);
+[; ;config.h: 40: void pwm_config(void);
+[; ;config.h: 41: void adc_config(void);
+[; ;config.h: 42: void eusart_config(void);
+[; ;config.h: 43: void init_io_display(void);
 [; ;math.h: 30: extern double fabs(double);
 [; ;math.h: 31: extern double floor(double);
 [; ;math.h: 32: extern double ceil(double);
@@ -6713,181 +6735,181 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
-"13 stepper.c
+"14 stepper.c
 [v _cnt `ui ~T0 @X0 1 e ]
 [i _cnt
 -> -> 1 `i `ui
 ]
-[; ;stepper.c: 13: unsigned int cnt=1;
-"15
-[v _stepper_move `(v ~T0 @X0 1 ef2`ui`ui ]
+[; ;stepper.c: 14: unsigned int cnt=1;
 "16
+[v _stepper_move `(v ~T0 @X0 1 ef2`ui`ui ]
+"17
 {
-[; ;stepper.c: 15: void stepper_move(unsigned directie, unsigned pasi)
-[; ;stepper.c: 16: {
+[; ;stepper.c: 16: void stepper_move(unsigned directie, unsigned pasi)
+[; ;stepper.c: 17: {
 [e :U _stepper_move ]
-"15
+"16
 [v _directie `ui ~T0 @X0 1 r1 ]
 [v _pasi `ui ~T0 @X0 1 r2 ]
-"16
-[f ]
-[; ;stepper.c: 17: if(directie==1)
 "17
-[e $ ! == _directie -> -> 1 `i `ui 851  ]
-[; ;stepper.c: 18: {
+[f ]
+[; ;stepper.c: 18: if(directie==1)
 "18
-{
-[; ;stepper.c: 19: if(cnt<=pasi)
+[e $ ! == _directie -> -> 1 `i `ui 851  ]
+[; ;stepper.c: 19: {
 "19
-[e $ ! <= _cnt _pasi 852  ]
-[; ;stepper.c: 20: {
-"20
 {
-[; ;stepper.c: 21: LATDbits.LD6=0;
+[; ;stepper.c: 20: if(cnt<=pasi)
+"20
+[e $ ! <= _cnt _pasi 852  ]
+[; ;stepper.c: 21: {
 "21
-[e = . . _LATDbits 1 6 -> -> 0 `i `uc ]
-[; ;stepper.c: 22: LATDbits.LD7=1;
+{
+[; ;stepper.c: 22: LATDbits.LD6=0;
 "22
-[e = . . _LATDbits 1 7 -> -> 1 `i `uc ]
-[; ;stepper.c: 23: LATDbits.LD5=0;
-"23
-[e = . . _LATDbits 1 5 -> -> 0 `i `uc ]
-[; ;stepper.c: 24: LATDbits.LD4=1;
-"24
-[e = . . _LATDbits 1 4 -> -> 1 `i `uc ]
-[; ;stepper.c: 25: _delay((unsigned long)((5)*(64000000/4000.0)));
-"25
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
-[; ;stepper.c: 27: LATDbits.LD6=0;
-"27
 [e = . . _LATDbits 1 6 -> -> 0 `i `uc ]
-[; ;stepper.c: 28: LATDbits.LD7=1;
-"28
+[; ;stepper.c: 23: LATDbits.LD7=1;
+"23
 [e = . . _LATDbits 1 7 -> -> 1 `i `uc ]
-[; ;stepper.c: 29: LATDbits.LD5=1;
-"29
-[e = . . _LATDbits 1 5 -> -> 1 `i `uc ]
-[; ;stepper.c: 30: LATDbits.LD4=0;
-"30
-[e = . . _LATDbits 1 4 -> -> 0 `i `uc ]
-[; ;stepper.c: 31: _delay((unsigned long)((5)*(64000000/4000.0)));
-"31
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
-[; ;stepper.c: 33: LATDbits.LD6=1;
-"33
-[e = . . _LATDbits 1 6 -> -> 1 `i `uc ]
-[; ;stepper.c: 34: LATDbits.LD7=0;
-"34
-[e = . . _LATDbits 1 7 -> -> 0 `i `uc ]
-[; ;stepper.c: 35: LATDbits.LD5=1;
-"35
-[e = . . _LATDbits 1 5 -> -> 1 `i `uc ]
-[; ;stepper.c: 36: LATDbits.LD4=0;
-"36
-[e = . . _LATDbits 1 4 -> -> 0 `i `uc ]
-[; ;stepper.c: 37: _delay((unsigned long)((5)*(64000000/4000.0)));
-"37
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
-[; ;stepper.c: 39: LATDbits.LD6=1;
-"39
-[e = . . _LATDbits 1 6 -> -> 1 `i `uc ]
-[; ;stepper.c: 40: LATDbits.LD7=0;
-"40
-[e = . . _LATDbits 1 7 -> -> 0 `i `uc ]
-[; ;stepper.c: 41: LATDbits.LD5=0;
-"41
+[; ;stepper.c: 24: LATDbits.LD5=0;
+"24
 [e = . . _LATDbits 1 5 -> -> 0 `i `uc ]
-[; ;stepper.c: 42: LATDbits.LD4=1;
-"42
+[; ;stepper.c: 25: LATDbits.LD4=1;
+"25
 [e = . . _LATDbits 1 4 -> -> 1 `i `uc ]
-[; ;stepper.c: 43: _delay((unsigned long)((500)*(64000000/4000.0)));
+[; ;stepper.c: 26: _delay((unsigned long)((5)*(64000000/4000.0)));
+"26
+[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;stepper.c: 28: LATDbits.LD6=0;
+"28
+[e = . . _LATDbits 1 6 -> -> 0 `i `uc ]
+[; ;stepper.c: 29: LATDbits.LD7=1;
+"29
+[e = . . _LATDbits 1 7 -> -> 1 `i `uc ]
+[; ;stepper.c: 30: LATDbits.LD5=1;
+"30
+[e = . . _LATDbits 1 5 -> -> 1 `i `uc ]
+[; ;stepper.c: 31: LATDbits.LD4=0;
+"31
+[e = . . _LATDbits 1 4 -> -> 0 `i `uc ]
+[; ;stepper.c: 32: _delay((unsigned long)((5)*(64000000/4000.0)));
+"32
+[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;stepper.c: 34: LATDbits.LD6=1;
+"34
+[e = . . _LATDbits 1 6 -> -> 1 `i `uc ]
+[; ;stepper.c: 35: LATDbits.LD7=0;
+"35
+[e = . . _LATDbits 1 7 -> -> 0 `i `uc ]
+[; ;stepper.c: 36: LATDbits.LD5=1;
+"36
+[e = . . _LATDbits 1 5 -> -> 1 `i `uc ]
+[; ;stepper.c: 37: LATDbits.LD4=0;
+"37
+[e = . . _LATDbits 1 4 -> -> 0 `i `uc ]
+[; ;stepper.c: 38: _delay((unsigned long)((5)*(64000000/4000.0)));
+"38
+[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;stepper.c: 40: LATDbits.LD6=1;
+"40
+[e = . . _LATDbits 1 6 -> -> 1 `i `uc ]
+[; ;stepper.c: 41: LATDbits.LD7=0;
+"41
+[e = . . _LATDbits 1 7 -> -> 0 `i `uc ]
+[; ;stepper.c: 42: LATDbits.LD5=0;
+"42
+[e = . . _LATDbits 1 5 -> -> 0 `i `uc ]
+[; ;stepper.c: 43: LATDbits.LD4=1;
 "43
+[e = . . _LATDbits 1 4 -> -> 1 `i `uc ]
+[; ;stepper.c: 44: _delay((unsigned long)((500)*(64000000/4000.0)));
+"44
 [e ( __delay (1 -> * -> -> 500 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
-[; ;stepper.c: 45: cnt++;
-"45
-[e ++ _cnt -> -> 1 `i `ui ]
+[; ;stepper.c: 46: cnt++;
 "46
+[e ++ _cnt -> -> 1 `i `ui ]
+"47
 }
 [e :U 852 ]
-[; ;stepper.c: 46: }
-[; ;stepper.c: 48: cnt=0;
-"48
+[; ;stepper.c: 47: }
+[; ;stepper.c: 49: cnt=0;
+"49
 [e = _cnt -> -> 0 `i `ui ]
-"50
+"51
 }
 [e :U 851 ]
-[; ;stepper.c: 50: }
-[; ;stepper.c: 52: if(directie==2)
-"52
-[e $ ! == _directie -> -> 2 `i `ui 853  ]
-[; ;stepper.c: 53: {
+[; ;stepper.c: 51: }
+[; ;stepper.c: 53: if(directie==2)
 "53
-{
-[; ;stepper.c: 54: LATDbits.LD6=1;
+[e $ ! == _directie -> -> 2 `i `ui 853  ]
+[; ;stepper.c: 54: {
 "54
-[e = . . _LATDbits 1 6 -> -> 1 `i `uc ]
-[; ;stepper.c: 55: LATDbits.LD7=0;
+{
+[; ;stepper.c: 55: LATDbits.LD6=1;
 "55
-[e = . . _LATDbits 1 7 -> -> 0 `i `uc ]
-[; ;stepper.c: 56: LATDbits.LD5=0;
-"56
-[e = . . _LATDbits 1 5 -> -> 0 `i `uc ]
-[; ;stepper.c: 57: LATDbits.LD4=1;
-"57
-[e = . . _LATDbits 1 4 -> -> 1 `i `uc ]
-[; ;stepper.c: 58: _delay((unsigned long)((50)*(64000000/4000.0)));
-"58
-[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
-[; ;stepper.c: 60: LATDbits.LD6=1;
-"60
 [e = . . _LATDbits 1 6 -> -> 1 `i `uc ]
-[; ;stepper.c: 61: LATDbits.LD7=0;
-"61
+[; ;stepper.c: 56: LATDbits.LD7=0;
+"56
 [e = . . _LATDbits 1 7 -> -> 0 `i `uc ]
-[; ;stepper.c: 62: LATDbits.LD5=1;
-"62
-[e = . . _LATDbits 1 5 -> -> 1 `i `uc ]
-[; ;stepper.c: 63: LATDbits.LD4=0;
-"63
-[e = . . _LATDbits 1 4 -> -> 0 `i `uc ]
-[; ;stepper.c: 64: _delay((unsigned long)((50)*(64000000/4000.0)));
-"64
-[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
-[; ;stepper.c: 66: LATDbits.LD6=0;
-"66
-[e = . . _LATDbits 1 6 -> -> 0 `i `uc ]
-[; ;stepper.c: 67: LATDbits.LD7=1;
-"67
-[e = . . _LATDbits 1 7 -> -> 1 `i `uc ]
-[; ;stepper.c: 68: LATDbits.LD5=1;
-"68
-[e = . . _LATDbits 1 5 -> -> 1 `i `uc ]
-[; ;stepper.c: 69: LATDbits.LD4=0;
-"69
-[e = . . _LATDbits 1 4 -> -> 0 `i `uc ]
-[; ;stepper.c: 70: _delay((unsigned long)((50)*(64000000/4000.0)));
-"70
-[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
-[; ;stepper.c: 72: LATDbits.LD6=0;
-"72
-[e = . . _LATDbits 1 6 -> -> 0 `i `uc ]
-[; ;stepper.c: 73: LATDbits.LD7=1;
-"73
-[e = . . _LATDbits 1 7 -> -> 1 `i `uc ]
-[; ;stepper.c: 74: LATDbits.LD5=0;
-"74
+[; ;stepper.c: 57: LATDbits.LD5=0;
+"57
 [e = . . _LATDbits 1 5 -> -> 0 `i `uc ]
-[; ;stepper.c: 75: LATDbits.LD4=1;
-"75
+[; ;stepper.c: 58: LATDbits.LD4=1;
+"58
 [e = . . _LATDbits 1 4 -> -> 1 `i `uc ]
-[; ;stepper.c: 76: _delay((unsigned long)((50)*(64000000/4000.0)));
-"76
+[; ;stepper.c: 59: _delay((unsigned long)((50)*(64000000/4000.0)));
+"59
 [e ( __delay (1 -> * -> -> 50 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
-"80
+[; ;stepper.c: 61: LATDbits.LD6=1;
+"61
+[e = . . _LATDbits 1 6 -> -> 1 `i `uc ]
+[; ;stepper.c: 62: LATDbits.LD7=0;
+"62
+[e = . . _LATDbits 1 7 -> -> 0 `i `uc ]
+[; ;stepper.c: 63: LATDbits.LD5=1;
+"63
+[e = . . _LATDbits 1 5 -> -> 1 `i `uc ]
+[; ;stepper.c: 64: LATDbits.LD4=0;
+"64
+[e = . . _LATDbits 1 4 -> -> 0 `i `uc ]
+[; ;stepper.c: 65: _delay((unsigned long)((50)*(64000000/4000.0)));
+"65
+[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;stepper.c: 67: LATDbits.LD6=0;
+"67
+[e = . . _LATDbits 1 6 -> -> 0 `i `uc ]
+[; ;stepper.c: 68: LATDbits.LD7=1;
+"68
+[e = . . _LATDbits 1 7 -> -> 1 `i `uc ]
+[; ;stepper.c: 69: LATDbits.LD5=1;
+"69
+[e = . . _LATDbits 1 5 -> -> 1 `i `uc ]
+[; ;stepper.c: 70: LATDbits.LD4=0;
+"70
+[e = . . _LATDbits 1 4 -> -> 0 `i `uc ]
+[; ;stepper.c: 71: _delay((unsigned long)((50)*(64000000/4000.0)));
+"71
+[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;stepper.c: 73: LATDbits.LD6=0;
+"73
+[e = . . _LATDbits 1 6 -> -> 0 `i `uc ]
+[; ;stepper.c: 74: LATDbits.LD7=1;
+"74
+[e = . . _LATDbits 1 7 -> -> 1 `i `uc ]
+[; ;stepper.c: 75: LATDbits.LD5=0;
+"75
+[e = . . _LATDbits 1 5 -> -> 0 `i `uc ]
+[; ;stepper.c: 76: LATDbits.LD4=1;
+"76
+[e = . . _LATDbits 1 4 -> -> 1 `i `uc ]
+[; ;stepper.c: 77: _delay((unsigned long)((50)*(64000000/4000.0)));
+"77
+[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+"81
 }
 [e :U 853 ]
-[; ;stepper.c: 80: }
-[; ;stepper.c: 82: }
-"82
+[; ;stepper.c: 81: }
+[; ;stepper.c: 83: }
+"83
 [e :UE 850 ]
 }

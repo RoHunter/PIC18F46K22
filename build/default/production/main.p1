@@ -1,14 +1,25 @@
 Version 3.2 HI-TECH Software Intermediate Code
 [p mainexit ]
-"33 config.h
+"39 config.h
 [v _config `(v ~T0 @X0 0 ef ]
-"34
+"40
 [v _pwm_config `(v ~T0 @X0 0 ef ]
-"35
+"41
 [v _adc_config `(v ~T0 @X0 0 ef ]
-"36
-[v _eusart_config `(v ~T0 @X0 0 ef ]
-"7900 C:\Program Files (x86)\Microchip\xc8\v1.44\include\pic18f46k22.h
+"43
+[v _init_io_display `(v ~T0 @X0 0 ef ]
+"8735 C:\Program Files (x86)\Microchip\xc8\v1.44\include\pic18f46k22.h
+[s S408 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S408 . TRISD0 TRISD1 TRISD2 TRISD3 TRISD4 TRISD5 TRISD6 TRISD7 ]
+"8745
+[s S409 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S409 . RD0 RD1 RD2 RD3 RD4 RD5 RD6 RD7 ]
+"8734
+[u S407 `S408 1 `S409 1 ]
+[n S407 . . . ]
+"8756
+[v _TRISDbits `VS407 ~T0 @X0 0 e@3989 ]
+"7900
 [s S384 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S384 . LATD0 LATD1 LATD2 LATD3 LATD4 LATD5 LATD6 LATD7 ]
 "7910
@@ -21,6 +32,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _LATDbits `VS383 ~T0 @X0 0 e@3980 ]
 "13609
 [v _ADCON0 `Vuc ~T0 @X0 0 e@4034 ]
+"47 i2c_display.h
+[v _Lcd_Clear `(v ~T0 @X0 0 ef ]
+"34 pwm_con.h
+[v _buck_boost `(v ~T0 @X0 0 ef2`i`i ]
 [v F6949 `(v ~T0 @X0 1 tf1`ul ]
 "164 C:\Program Files (x86)\Microchip\xc8\v1.44\include\pic18.h
 [v __delay `JF6949 ~T0 @X0 0 e ]
@@ -56,8 +71,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADCON0bits `VS642 ~T0 @X0 0 e@4034 ]
 "13761
 [v _ADRESH `Vuc ~T0 @X0 0 e@4036 ]
-"34 pwm_con.h
-[v _buck_boost `(v ~T0 @X0 0 ef2`i`i ]
+"48 i2c_display.h
+[v _Lcd_Set_Cursor `(v ~T0 @X0 0 ef2`uc`uc ]
+"51
+[v _Lcd_Write_String `(v ~T0 @X0 0 ef1`*uc ]
+"194 C:\Program Files (x86)\Microchip\xc8\v1.44\include\stdio.h
+[v _sprintf `(i ~T0 @X0 0 e1v`*uc`*Cuc ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -6656,7 +6675,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "29
 [p x MCLRE=EXTMCLR ]
 "32
-[p x STVREN=ON ]
+[p x STVREN=OFF ]
 "33
 [p x LVP=OFF ]
 "34
@@ -6697,66 +6716,35 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p x EBTR3=OFF ]
 "64
 [p x EBTRB=OFF ]
-[; ;config.h: 33: void config(void);
-[; ;config.h: 34: void pwm_config(void);
-[; ;config.h: 35: void adc_config(void);
-[; ;config.h: 36: void eusart_config(void);
+[; ;i2c_display.h: 34: void I2C_Master_Init(const unsigned long c);
+[; ;i2c_display.h: 35: void I2C_Master_Wait();
+[; ;i2c_display.h: 36: void I2C_Master_Start();
+[; ;i2c_display.h: 37: void I2C_Master_RepeatedStart();
+[; ;i2c_display.h: 38: void I2C_Master_Stop();
+[; ;i2c_display.h: 39: void I2C_Master_Write(unsigned d);
+[; ;i2c_display.h: 40: void I2C_Write_Display(unsigned d);
+[; ;i2c_display.h: 42: unsigned short I2C_Master_Read(unsigned short a);
+[; ;i2c_display.h: 45: void Lcd_Port(char data);
+[; ;i2c_display.h: 46: void Lcd_Cmd(char a);
+[; ;i2c_display.h: 47: void Lcd_Clear();
+[; ;i2c_display.h: 48: void Lcd_Set_Cursor(char a, char b);
+[; ;i2c_display.h: 49: void Lcd_Init();
+[; ;i2c_display.h: 50: void Lcd_Write_Char(char a);
+[; ;i2c_display.h: 51: void Lcd_Write_String(char *a);
+[; ;i2c_display.h: 52: void Lcd_Shift_Right();
+[; ;i2c_display.h: 53: void Lcd_Shift_Left();
+[; ;i2c_display.h: 54: void Cursor_On();
+[; ;i2c_display.h: 55: void Cursor_Off();
+[; ;i2c_display.h: 56: void Cursor_Left();
+[; ;i2c_display.h: 57: void Cursor_Right();
+[; ;config.h: 39: void config(void);
+[; ;config.h: 40: void pwm_config(void);
+[; ;config.h: 41: void adc_config(void);
+[; ;config.h: 42: void eusart_config(void);
+[; ;config.h: 43: void init_io_display(void);
 [; ;pwm_con.h: 34: void buck_boost (int type, int dty );
 [; ;pwm_con.h: 35: void buck(int duty_cycle);
 [; ;pwm_con.h: 36: void boost(int duty_cycle);
-[; ;stdint.h: 13: typedef signed char int8_t;
-[; ;stdint.h: 20: typedef signed int int16_t;
-[; ;stdint.h: 28: typedef signed short long int int24_t;
-[; ;stdint.h: 36: typedef signed long int int32_t;
-[; ;stdint.h: 43: typedef unsigned char uint8_t;
-[; ;stdint.h: 49: typedef unsigned int uint16_t;
-[; ;stdint.h: 56: typedef unsigned short long int uint24_t;
-[; ;stdint.h: 63: typedef unsigned long int uint32_t;
-[; ;stdint.h: 71: typedef signed char int_least8_t;
-[; ;stdint.h: 78: typedef signed int int_least16_t;
-[; ;stdint.h: 90: typedef signed short long int int_least24_t;
-[; ;stdint.h: 98: typedef signed long int int_least32_t;
-[; ;stdint.h: 105: typedef unsigned char uint_least8_t;
-[; ;stdint.h: 111: typedef unsigned int uint_least16_t;
-[; ;stdint.h: 121: typedef unsigned short long int uint_least24_t;
-[; ;stdint.h: 128: typedef unsigned long int uint_least32_t;
-[; ;stdint.h: 137: typedef signed char int_fast8_t;
-[; ;stdint.h: 144: typedef signed int int_fast16_t;
-[; ;stdint.h: 156: typedef signed short long int int_fast24_t;
-[; ;stdint.h: 164: typedef signed long int int_fast32_t;
-[; ;stdint.h: 171: typedef unsigned char uint_fast8_t;
-[; ;stdint.h: 177: typedef unsigned int uint_fast16_t;
-[; ;stdint.h: 187: typedef unsigned short long int uint_fast24_t;
-[; ;stdint.h: 194: typedef unsigned long int uint_fast32_t;
-[; ;stdint.h: 200: typedef int32_t intmax_t;
-[; ;stdint.h: 205: typedef uint32_t uintmax_t;
-[; ;stdint.h: 210: typedef int16_t intptr_t;
-[; ;stdint.h: 215: typedef uint16_t uintptr_t;
-"38 usart_pic16.h
-[v _URBuff `Vuc ~T0 @X0 -> 64 `i e ]
-[; ;usart_pic16.h: 38: volatile char URBuff[64];
-"39
-[v _UQFront `Vc ~T0 @X0 1 e ]
-[; ;usart_pic16.h: 39: volatile int8_t UQFront;
-"40
-[v _UQEnd `Vc ~T0 @X0 1 e ]
-[; ;usart_pic16.h: 40: volatile int8_t UQEnd;
-[; ;usart_pic16.h: 42: void USARTInit(uint16_t baud_rate);
-[; ;usart_pic16.h: 43: void USARTWriteChar(char ch);
-[; ;usart_pic16.h: 44: void USARTWriteString(const char *str);
-[; ;usart_pic16.h: 45: void USARTWriteLine(const char *str);
-[; ;usart_pic16.h: 46: void USARTWriteInt(int16_t val, int8_t field_length);
-[; ;usart_pic16.h: 47: void USARTHandleRxInt();
-[; ;usart_pic16.h: 48: char USARTReadData();
-[; ;usart_pic16.h: 49: uint8_t USARTDataAvailable();
-[; ;usart_pic16.h: 50: void USARTGotoNewLine();
-[; ;usart_pic16.h: 51: void USARTReadBuffer(char *buff,uint16_t len);
-[; ;usart_pic16.h: 52: void USARTFlushBuffer();
-[; ;usart_pic16.h: 55: void USART2Init(uint16_t baud_rate);
-[; ;usart_pic16.h: 56: void USART2WriteChar(char ch);
-[; ;usart_pic16.h: 57: void USART2WriteString(const char *str);
-[; ;usart_pic16.h: 58: void USART2GotoNewLine();
-[; ;usart_pic16.h: 59: void USART2WriteInt(int16_t val, int8_t field_length);
 [; ;math.h: 30: extern double fabs(double);
 [; ;math.h: 31: extern double floor(double);
 [; ;math.h: 32: extern double ceil(double);
@@ -6813,19 +6801,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
-[; ;stepper.h: 29: void stepper_move(unsigned directie, unsigned pasi);
-[; ;main.h: 23: void interrupt gen_int(void);
-"18 main.c
-[v _a `i ~T0 @X0 1 e ]
-[v _c `i ~T0 @X0 1 e ]
-[v _d `i ~T0 @X0 1 e ]
+"20 main.c
 [v _fac `i ~T0 @X0 1 e ]
-[; ;main.c: 18: int a,c,d,fac;
-"19
+[; ;main.c: 20: int fac;
+"21
 [v _duty_boost `ui ~T0 @X0 1 e ]
 [v _duty_buck `ui ~T0 @X0 1 e ]
-[; ;main.c: 19: unsigned duty_boost,duty_buck;
-"20
+[; ;main.c: 21: unsigned duty_boost,duty_buck;
+"22
 [v _pasi `ui ~T0 @X0 1 e ]
 [v _dir `ui ~T0 @X0 1 e ]
 [v _nr_pasi `ui ~T0 @X0 1 e ]
@@ -6835,115 +6818,314 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _pasi_int `ui ~T0 @X0 1 e ]
 [v _sel_pasi `ui ~T0 @X0 1 e ]
 [v _nt `ui ~T0 @X0 1 e ]
-[; ;main.c: 20: unsigned int pasi,dir,nr_pasi,directie_2,go_stepper,start,pasi_int,sel_pasi,nt;
-"21
-[v _str `uc ~T0 @X0 -> 20 `i e ]
-[; ;main.c: 21: char str[20];
-[v $root$_main `(v ~T0 @X0 0 e ]
-"22
-[v _main `(v ~T0 @X0 1 ef ]
+[; ;main.c: 22: unsigned int pasi,dir,nr_pasi,directie_2,go_stepper,start,pasi_int,sel_pasi,nt;
 "23
+[v _str `uc ~T0 @X0 -> 20 `i e ]
+[; ;main.c: 23: char str[20];
+[v $root$_main `(v ~T0 @X0 0 e ]
+"24
+[v _main `(v ~T0 @X0 1 ef ]
+"25
 {
-[; ;main.c: 22: void main(void)
-[; ;main.c: 23: {
+[; ;main.c: 24: void main(void)
+[; ;main.c: 25: {
 [e :U _main ]
 [f ]
-[; ;main.c: 24: dir=0;
-"24
-[e = _dir -> -> 0 `i `ui ]
-[; ;main.c: 25: nt=0;
-"25
-[e = _nt -> -> 0 `i `ui ]
-[; ;main.c: 26: nr_pasi=0;
+[; ;main.c: 26: dir=0;
 "26
-[e = _nr_pasi -> -> 0 `i `ui ]
-[; ;main.c: 27: go_stepper=0;
+[e = _dir -> -> 0 `i `ui ]
+[; ;main.c: 27: nt=0;
 "27
-[e = _go_stepper -> -> 0 `i `ui ]
-[; ;main.c: 28: start=0;
+[e = _nt -> -> 0 `i `ui ]
+[; ;main.c: 28: nr_pasi=0;
 "28
-[e = _start -> -> 0 `i `ui ]
-[; ;main.c: 29: sel_pasi=0;
+[e = _nr_pasi -> -> 0 `i `ui ]
+[; ;main.c: 29: go_stepper=0;
 "29
-[e = _sel_pasi -> -> 0 `i `ui ]
+[e = _go_stepper -> -> 0 `i `ui ]
+[; ;main.c: 30: start=0;
 "30
-[v _pwm_buffer `uc ~T0 @X0 -> 20 `i a ]
-[; ;main.c: 30: char pwm_buffer[20];
-[; ;main.c: 31: config();
+[e = _start -> -> 0 `i `ui ]
+[; ;main.c: 31: sel_pasi=0;
 "31
-[e ( _config ..  ]
-[; ;main.c: 32: pwm_config();
+[e = _sel_pasi -> -> 0 `i `ui ]
 "32
-[e ( _pwm_config ..  ]
-[; ;main.c: 33: adc_config();
+[v _pwm_buffer `uc ~T0 @X0 -> 20 `i a ]
+[; ;main.c: 32: char pwm_buffer[20];
+[; ;main.c: 33: config();
 "33
-[e ( _adc_config ..  ]
-[; ;main.c: 34: eusart_config();
+[e ( _config ..  ]
+[; ;main.c: 34: pwm_config();
 "34
-[e ( _eusart_config ..  ]
+[e ( _pwm_config ..  ]
+[; ;main.c: 35: adc_config();
+"35
+[e ( _adc_config ..  ]
+[; ;main.c: 36: init_io_display();
 "36
+[e ( _init_io_display ..  ]
+"37
+[v _str_V `uc ~T0 @X0 -> 8 `i a ]
+[v _str_A `uc ~T0 @X0 -> 8 `i a ]
+[v _str_P `uc ~T0 @X0 -> 8 `i a ]
+"38
+[v _tens `f ~T0 @X0 1 a ]
+[v _tens_A `f ~T0 @X0 1 a ]
+[v _curent `f ~T0 @X0 1 a ]
+[v _Power `f ~T0 @X0 1 a ]
+[v _Iout `f ~T0 @X0 1 a ]
+[v _Uout `f ~T0 @X0 1 a ]
+"39
+[v _rez_adc_A `i ~T0 @X0 1 a ]
+[v _rez_adc_U `i ~T0 @X0 1 a ]
+"40
 [v _dty `i ~T0 @X0 1 a ]
 [v _rez_adc `i ~T0 @X0 1 a ]
-"37
-[v _numar `f ~T0 @X0 1 a ]
-[; ;main.c: 36: int dty,rez_adc;
-[; ;main.c: 37: float numar;
-[; ;main.c: 38: dty=0;
-"38
-[e = _dty -> 0 `i ]
-[; ;main.c: 39: LATDbits.LD6=0;
-"39
-[e = . . _LATDbits 1 6 -> -> 0 `i `uc ]
-[; ;main.c: 40: LATDbits.LD7=0;
-"40
-[e = . . _LATDbits 1 7 -> -> 0 `i `uc ]
-[; ;main.c: 41: LATDbits.LD5=0;
+[v _tip `i ~T0 @X0 1 a ]
+[v _port `i ~T0 @X0 1 a ]
 "41
-[e = . . _LATDbits 1 5 -> -> 0 `i `uc ]
-[; ;main.c: 42: LATDbits.LD4=0;
+[v _numar `f ~T0 @X0 1 a ]
+[; ;main.c: 37: char str_V[8],str_A[8],str_P[8];
+[; ;main.c: 38: float tens,tens_A,curent,Power,Iout,Uout;
+[; ;main.c: 39: int rez_adc_A,rez_adc_U;
+[; ;main.c: 40: int dty,rez_adc,tip,port;
+[; ;main.c: 41: float numar;
+[; ;main.c: 42: dty=0;
 "42
-[e = . . _LATDbits 1 4 -> -> 0 `i `uc ]
-[; ;main.c: 45: ADCON0=0b00000011;
+[e = _dty -> 0 `i ]
+[; ;main.c: 43: port=0;
+"43
+[e = _port -> 0 `i ]
+[; ;main.c: 44: TRISDbits.RD4=0;
+"44
+[e = . . _TRISDbits 1 4 -> -> 0 `i `uc ]
+[; ;main.c: 45: LATDbits.LD6=0;
 "45
-[e = _ADCON0 -> -> 3 `i `uc ]
-[; ;main.c: 52: while(1)
-"52
-[e :U 852 ]
-[; ;main.c: 53: {
+[e = . . _LATDbits 1 6 -> -> 0 `i `uc ]
+[; ;main.c: 46: LATDbits.LD7=0;
+"46
+[e = . . _LATDbits 1 7 -> -> 0 `i `uc ]
+[; ;main.c: 47: LATDbits.LD5=0;
+"47
+[e = . . _LATDbits 1 5 -> -> 0 `i `uc ]
+[; ;main.c: 48: LATDbits.LD4=0;
+"48
+[e = . . _LATDbits 1 4 -> -> 0 `i `uc ]
+[; ;main.c: 51: ADCON0=0b00010011;
+"51
+[e = _ADCON0 -> -> 19 `i `uc ]
+[; ;main.c: 53: Lcd_Clear();
 "53
+[e ( _Lcd_Clear ..  ]
+[; ;main.c: 58: while(1)
+"58
+[e :U 852 ]
+[; ;main.c: 59: {
+"59
 {
-[; ;main.c: 54: ADCON0=0b00000011;
-"54
-[e = _ADCON0 -> -> 3 `i `uc ]
-[; ;main.c: 55: _delay((unsigned long)((10)*(64000000/4000.0)));
-"55
-[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
-[; ;main.c: 56: ADCON0bits.GO=1;
-"56
-[e = . . _ADCON0bits 2 1 -> -> 1 `i `uc ]
-[; ;main.c: 57: _delay((unsigned long)((100)*(64000000/4000.0)));
-"57
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
-[; ;main.c: 60: rez_adc=ADRESH;
-"60
-[e = _rez_adc -> _ADRESH `i ]
-[; ;main.c: 61: numar=rez_adc*0.0182;
-"61
-[e = _numar -> * -> _rez_adc `d .0.0182 `f ]
-[; ;main.c: 62: dty=rez_adc*0.39;
+[; ;main.c: 62: buck_boost (2,50 );
 "62
-[e = _dty -> * -> _rez_adc `d .0.39 `i ]
-[; ;main.c: 64: buck_boost (2, dty );
+[e ( _buck_boost (2 , -> 2 `i -> 50 `i ]
+[; ;main.c: 63: if(port==0);
+"63
+[e $ ! == _port -> 0 `i 854  ]
+[e :U 854 ]
+[; ;main.c: 64: {
 "64
-[e ( _buck_boost (2 , -> 2 `i _dty ]
+{
+[; ;main.c: 65: ADCON0=0b00000111;
+"65
+[e = _ADCON0 -> -> 7 `i `uc ]
+[; ;main.c: 66: _delay((unsigned long)((10)*(64000000/4000.0)));
+"66
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;main.c: 67: ADCON0bits.GO=1;
+"67
+[e = . . _ADCON0bits 2 1 -> -> 1 `i `uc ]
+[; ;main.c: 68: _delay((unsigned long)((100)*(64000000/4000.0)));
+"68
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;main.c: 69: rez_adc_U=ADRESH;
+"69
+[e = _rez_adc_U -> _ADRESH `i ]
+[; ;main.c: 70: tens=rez_adc_U*0.01953125;
+"70
+[e = _tens -> * -> _rez_adc_U `d .0.01953125 `f ]
+[; ;main.c: 71: Uout=tens/0.25;
+"71
+[e = _Uout -> / -> _tens `d .0.25 `f ]
+[; ;main.c: 72: Lcd_Set_Cursor(1,1);
+"72
+[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 73: Lcd_Write_String("U=");
+"73
+[e ( _Lcd_Write_String (1 -> :s 1C `*uc ]
+[; ;main.c: 74: sprintf(str_V, "%.2f", tens);
+"74
+[e ( _sprintf (1 , (. , &U _str_V :s 2C -> _tens `d ]
+[; ;main.c: 75: Lcd_Set_Cursor(1,3);
+"75
+[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 3 `i `uc ]
+[; ;main.c: 76: Lcd_Write_String(str_V);
+"76
+[e ( _Lcd_Write_String (1 &U _str_V ]
+[; ;main.c: 77: port=1;
+"77
+[e = _port -> 1 `i ]
+[; ;main.c: 78: _delay((unsigned long)((100)*(64000000/4000.0)));
+"78
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;main.c: 79: ADRESH=0X00;
+"79
+[e = _ADRESH -> -> 0 `i `uc ]
+[; ;main.c: 80: _delay((unsigned long)((100)*(64000000/4000.0)));
+"80
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+"81
+}
+[; ;main.c: 81: }
+[; ;main.c: 83: if(port==1);
+"83
+[e $ ! == _port -> 1 `i 855  ]
+[e :U 855 ]
+[; ;main.c: 84: {
+"84
+{
+[; ;main.c: 85: ADCON0=0b00001011;
+"85
+[e = _ADCON0 -> -> 11 `i `uc ]
+[; ;main.c: 86: _delay((unsigned long)((10)*(64000000/4000.0)));
+"86
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;main.c: 87: ADCON0bits.GO=1;
+"87
+[e = . . _ADCON0bits 2 1 -> -> 1 `i `uc ]
+[; ;main.c: 88: _delay((unsigned long)((100)*(64000000/4000.0)));
+"88
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;main.c: 89: rez_adc_A=ADRESH;
+"89
+[e = _rez_adc_A -> _ADRESH `i ]
+[; ;main.c: 90: tens_A=rez_adc_A*0.0181372549019608;
+"90
+[e = _tens_A -> * -> _rez_adc_A `d .0.0181372549019608 `f ]
+[; ;main.c: 91: Iout=tens_A;
+"91
+[e = _Iout _tens_A ]
+[; ;main.c: 93: Lcd_Set_Cursor(2,1);
+"93
+[e ( _Lcd_Set_Cursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;main.c: 94: Lcd_Write_String("I=");
+"94
+[e ( _Lcd_Write_String (1 -> :s 3C `*uc ]
+[; ;main.c: 95: sprintf(str_A, "%.2f", curent);
+"95
+[e ( _sprintf (1 , (. , &U _str_A :s 4C -> _curent `d ]
+[; ;main.c: 96: Lcd_Set_Cursor(2,3);
+"96
+[e ( _Lcd_Set_Cursor (2 , -> -> 2 `i `uc -> -> 3 `i `uc ]
+[; ;main.c: 97: Lcd_Write_String(str_A);
+"97
+[e ( _Lcd_Write_String (1 &U _str_A ]
+[; ;main.c: 98: Lcd_Write_String(" A");
+"98
+[e ( _Lcd_Write_String (1 -> :s 5C `*uc ]
+[; ;main.c: 99: port=2;
+"99
+[e = _port -> 2 `i ]
+[; ;main.c: 100: _delay((unsigned long)((100)*(64000000/4000.0)));
+"100
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;main.c: 101: ADRESH=0X00;
+"101
+[e = _ADRESH -> -> 0 `i `uc ]
+[; ;main.c: 102: _delay((unsigned long)((100)*(64000000/4000.0)));
+"102
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+"103
+}
+[; ;main.c: 103: }
+[; ;main.c: 104: if(port==2);
+"104
+[e $ ! == _port -> 2 `i 856  ]
+[e :U 856 ]
+[; ;main.c: 105: {
 "105
+{
+[; ;main.c: 106: ADCON0=0b00001111;
+"106
+[e = _ADCON0 -> -> 15 `i `uc ]
+[; ;main.c: 107: _delay((unsigned long)((10)*(64000000/4000.0)));
+"107
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;main.c: 108: ADCON0bits.GO=1;
+"108
+[e = . . _ADCON0bits 2 1 -> -> 1 `i `uc ]
+[; ;main.c: 109: _delay((unsigned long)((100)*(64000000/4000.0)));
+"109
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;main.c: 110: rez_adc_U=ADRESH;
+"110
+[e = _rez_adc_U -> _ADRESH `i ]
+[; ;main.c: 111: tens=rez_adc_U*0.01953125;
+"111
+[e = _tens -> * -> _rez_adc_U `d .0.01953125 `f ]
+[; ;main.c: 112: tens=tens/0.2;
+"112
+[e = _tens -> / -> _tens `d .0.2 `f ]
+[; ;main.c: 113: Lcd_Set_Cursor(1,9);
+"113
+[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 9 `i `uc ]
+[; ;main.c: 114: Lcd_Write_String("Ui=");
+"114
+[e ( _Lcd_Write_String (1 -> :s 6C `*uc ]
+[; ;main.c: 115: sprintf(str_V, "%.2f", tens);
+"115
+[e ( _sprintf (1 , (. , &U _str_V :s 7C -> _tens `d ]
+[; ;main.c: 116: Lcd_Set_Cursor(1,12);
+"116
+[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 12 `i `uc ]
+[; ;main.c: 117: Lcd_Write_String(str_V);
+"117
+[e ( _Lcd_Write_String (1 &U _str_V ]
+[; ;main.c: 118: Lcd_Write_String(" V");
+"118
+[e ( _Lcd_Write_String (1 -> :s 8C `*uc ]
+[; ;main.c: 119: port=0;
+"119
+[e = _port -> 0 `i ]
+[; ;main.c: 120: _delay((unsigned long)((100)*(64000000/4000.0)));
+"120
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;main.c: 121: ADRESH=0X00;
+"121
+[e = _ADRESH -> -> 0 `i `uc ]
+[; ;main.c: 122: _delay((unsigned long)((100)*(64000000/4000.0)));
+"122
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+"123
+}
+[; ;main.c: 123: }
+[; ;main.c: 125: Power=Uout*Iout;
+"125
+[e = _Power * _Uout _Iout ]
+"128
 }
 [e :U 851 ]
-"52
+"58
 [e $U 852  ]
 [e :U 853 ]
-[; ;main.c: 105: }
-[; ;main.c: 106: }
-"106
+[; ;main.c: 128: }
+[; ;main.c: 129: }
+"129
 [e :UE 850 ]
 }
+[p f _sprintf 8462336 ]
+[a 2C 37 46 50 102 0 ]
+[a 4C 37 46 50 102 0 ]
+[a 7C 37 46 50 102 0 ]
+[a 8C 32 86 0 ]
+[a 5C 32 65 0 ]
+[a 6C 85 105 61 0 ]
+[a 1C 85 61 0 ]
+[a 3C 73 61 0 ]

@@ -10,33 +10,31 @@
 #include "bit_config.h"
 #include "config.h"
 
-int c,b,d,adcp,adcn,type,dty,buck,boost;
+int c,b,d,adcp,adcn,type,dty,buck,boost,dty_car;
 
 
 //
-//void buck(int duty_cycle)
+//void boost(int dty_car)
 //{
-//	if(duty_cycle>100)
+//	if(dty_car>100)
 //    {
-//    duty_cycle=100;
+//    dty_car=100;
 //    }
 //    
-//	c=duty_cycle*1.7; 
+//	c=dty_car*1.7; 
 //	CCPR2L=c;
 //    
 //	
 //}
-//void boost(int duty_cycle)
+//void buck(int dty_car)
 //{
-//	if(duty_cycle>100)
+//	if(dty_car>100)
 //    {
-//    duty_cycle=100;
+//    dty_car=100;
 //    }
 //    
-//	c=duty_cycle*1.7; 
+//	c=dty_car*1.7; 
 //	CCPR1L=c;
-//    
-//	
 //}
 
 void buck_boost (int type, int dty )
@@ -56,7 +54,7 @@ void buck_boost (int type, int dty )
     
     if (type==2)
     {
-        CCPR2L=0b11111111;
+        CCPR2L=100;
         	if(dty>100)
     {
     dty=100;

@@ -20,5 +20,8 @@
  */
 
 #include <xc.h>
+#include "i2c_display.h"
+
+
 void interrupt gen_int(void);
 

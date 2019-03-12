@@ -1,8 +1,6 @@
 #include <xc.h>
 #include "config.h"
 #include "usart_pic16.h" 
-
-
     void adc_U(void)
     {
     

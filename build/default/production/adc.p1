@@ -6564,10 +6564,32 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 164: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 166: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 168: extern __nonreentrant void _delay3(unsigned char);
-[; ;config.h: 33: void config(void);
-[; ;config.h: 34: void pwm_config(void);
-[; ;config.h: 35: void adc_config(void);
-[; ;config.h: 36: void eusart_config(void);
+[; ;i2c_display.h: 34: void I2C_Master_Init(const unsigned long c);
+[; ;i2c_display.h: 35: void I2C_Master_Wait();
+[; ;i2c_display.h: 36: void I2C_Master_Start();
+[; ;i2c_display.h: 37: void I2C_Master_RepeatedStart();
+[; ;i2c_display.h: 38: void I2C_Master_Stop();
+[; ;i2c_display.h: 39: void I2C_Master_Write(unsigned d);
+[; ;i2c_display.h: 40: void I2C_Write_Display(unsigned d);
+[; ;i2c_display.h: 42: unsigned short I2C_Master_Read(unsigned short a);
+[; ;i2c_display.h: 45: void Lcd_Port(char data);
+[; ;i2c_display.h: 46: void Lcd_Cmd(char a);
+[; ;i2c_display.h: 47: void Lcd_Clear();
+[; ;i2c_display.h: 48: void Lcd_Set_Cursor(char a, char b);
+[; ;i2c_display.h: 49: void Lcd_Init();
+[; ;i2c_display.h: 50: void Lcd_Write_Char(char a);
+[; ;i2c_display.h: 51: void Lcd_Write_String(char *a);
+[; ;i2c_display.h: 52: void Lcd_Shift_Right();
+[; ;i2c_display.h: 53: void Lcd_Shift_Left();
+[; ;i2c_display.h: 54: void Cursor_On();
+[; ;i2c_display.h: 55: void Cursor_Off();
+[; ;i2c_display.h: 56: void Cursor_Left();
+[; ;i2c_display.h: 57: void Cursor_Right();
+[; ;config.h: 39: void config(void);
+[; ;config.h: 40: void pwm_config(void);
+[; ;config.h: 41: void adc_config(void);
+[; ;config.h: 42: void eusart_config(void);
+[; ;config.h: 43: void init_io_display(void);
 [; ;stdint.h: 13: typedef signed char int8_t;
 [; ;stdint.h: 20: typedef signed int int16_t;
 [; ;stdint.h: 28: typedef signed short long int int24_t;
@@ -6621,33 +6643,33 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;usart_pic16.h: 57: void USART2WriteString(const char *str);
 [; ;usart_pic16.h: 58: void USART2GotoNewLine();
 [; ;usart_pic16.h: 59: void USART2WriteInt(int16_t val, int8_t field_length);
-"6 adc.c
+"4 adc.c
 [v _adc_U `(v ~T0 @X0 1 ef ]
-"7
+"5
 {
-[; ;adc.c: 6: void adc_U(void)
-[; ;adc.c: 7: {
+[; ;adc.c: 4: void adc_U(void)
+[; ;adc.c: 5: {
 [e :U _adc_U ]
 [f ]
-[; ;adc.c: 10: ADCON0=0b00000011;
-"10
+[; ;adc.c: 8: ADCON0=0b00000011;
+"8
 [e = _ADCON0 -> -> 3 `i `uc ]
-[; ;adc.c: 12: }
-"12
+[; ;adc.c: 10: }
+"10
 [e :UE 849 ]
 }
-"14
+"12
 [v _adc_A `(v ~T0 @X0 1 ef ]
-"15
+"13
 {
-[; ;adc.c: 14: void adc_A(void)
-[; ;adc.c: 15: {
+[; ;adc.c: 12: void adc_A(void)
+[; ;adc.c: 13: {
 [e :U _adc_A ]
 [f ]
-[; ;adc.c: 18: ADCON0=0b00000111;
-"18
+[; ;adc.c: 16: ADCON0=0b00000111;
+"16
 [e = _ADCON0 -> -> 7 `i `uc ]
-[; ;adc.c: 20: }
-"20
+[; ;adc.c: 18: }
+"18
 [e :UE 850 ]
 }

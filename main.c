@@ -3,19 +3,21 @@
 #include "bit_config.h"
 #include "config.h"
 #include "pwm_con.h"
-#include "usart_pic16.h"
 #include <math.h>
 #include <stdio.h>
-#include "stepper.h"
-#include "main.h"
 #include "adc.h"
-//#include "HD44780.h"
+
+
 #define   forward   1  
 #define   backward   2  
 #define   new_transmision 2
 #define   transmision_done 1
-
-int a,c,d,fac;
+#define   sel PORTEbits.RE0
+#define   dir1  LATCbits.LATC3
+#define   dir2  LATCbits.LATC4
+#define   br1  LATCbits.LATC5
+#define   br2  LATCbits.LATC6
+int fac;
 unsigned duty_boost,duty_buck;
 unsigned int pasi,dir,nr_pasi,directie_2,go_stepper,start,pasi_int,sel_pasi,nt;
 char str[20];
@@ -31,153 +33,97 @@ void main(void)
     config();
     pwm_config();
     adc_config();
-    eusart_config();
-
-    int dty,rez_adc;
+    init_io_display();
+    char str_V[8],str_A[8],str_P[8];
+    float tens,tens_A,curent,Power,Iout,Uout;
+    int rez_adc_A,rez_adc_U;
+    int dty,rez_adc,tip,port;
     float numar;
     dty=0;
-         LATDbits.LD6=0;
-         LATDbits.LD7=0;
-         LATDbits.LD5=0;
-         LATDbits.LD4=0; 
+    port=0;
+    TRISDbits.RD4=0;
+    LATDbits.LD6=0;
+    LATDbits.LD7=0;
+    LATDbits.LD5=0;
+    LATDbits.LD4=0; 
+
          
+    ADCON0=0b00010011;    
          
-      ADCON0=0b00000011;    
-         
-         
-         
+    Lcd_Clear();     
+      
          
          
          
     while(1)
     {
-       ADCON0=0b00000011;
+        
+
+        buck_boost (2,50 );
+   if(port==0);
+    {
+        ADCON0=0b00000111;
         __delay_ms(10);
         ADCON0bits.GO=1;
         __delay_ms(100);
-////        USARTWriteChar('R');
-////     
-        rez_adc=ADRESH;
-        numar=rez_adc*0.0182;
-        dty=rez_adc*0.39;
+        rez_adc_U=ADRESH;
+        tens=rez_adc_U*0.01953125;
+        Uout=tens/0.25;
+        Lcd_Set_Cursor(1,1);
+        Lcd_Write_String("U=");
+        sprintf(str_V, "%.2f", tens);
+        Lcd_Set_Cursor(1,3);
+        Lcd_Write_String(str_V);
+        port=1;
+         __delay_ms(100);
+         ADRESH=0X00;
+         __delay_ms(100);
+    }
+    
+    if(port==1);
+    {   
+        ADCON0=0b00001011;
+        __delay_ms(10);
+        ADCON0bits.GO=1;
+        __delay_ms(100);
+        rez_adc_A=ADRESH;
+        tens_A=rez_adc_A*0.0181372549019608;
+        Iout=tens_A;
+        
+        Lcd_Set_Cursor(2,1);
+        Lcd_Write_String("I=");
+        sprintf(str_A, "%.2f", curent);
+        Lcd_Set_Cursor(2,3);
+        Lcd_Write_String(str_A);
+         Lcd_Write_String(" A");
+        port=2;
+         __delay_ms(100);
+         ADRESH=0X00;
+         __delay_ms(100);
+    }
+if(port==2);
+    {   
+        ADCON0=0b00001111;
+        __delay_ms(10);
+        ADCON0bits.GO=1;
+        __delay_ms(100);
+        rez_adc_U=ADRESH;
+        tens=rez_adc_U*0.01953125;
+        tens=tens/0.2;
+        Lcd_Set_Cursor(1,9);
+        Lcd_Write_String("Ui=");
+        sprintf(str_V, "%.2f", tens);
+        Lcd_Set_Cursor(1,12);
+        Lcd_Write_String(str_V);
+         Lcd_Write_String(" V");
+        port=0;
+         __delay_ms(100);
+         ADRESH=0X00;
+         __delay_ms(100);
+    }
 
-buck_boost (2, dty );
+Power=Uout*Iout;
 
-        
-        
-        
-//        sprintf(str, "Voltage= %.2f", numar);
-//        USARTWriteString(str);
-//        USARTGotoNewLine();
-//        sprintf(pwm_buffer, "PWM= %u", dty);
-//        USARTWriteString(pwm_buffer);
-//        USARTGotoNewLine();
-//	USARTWriteChar('B');
-        
-        
-        
-//        if(start==0)
-//        {
-//        USARTWriteString("Alege dicectia cu tasta D"); 
-//        USARTGotoNewLine();
-//        USARTWriteString("Reseteaza cu tasta R");
-//        USARTGotoNewLine();
-//        USARTGotoNewLine();
-//        start=1;
-//        }
-//        
-//        __delay_ms(100);
-//        if(go_stepper==1)
-//        {
-//           stepper_move(directie_2, pasi);
-//           go_stepper=0;
-//        } 
-//        else
-//        {
-//         LATDbits.LD6=0;
-//         LATDbits.LD7=0;
-//         LATDbits.LD5=0;
-//         LATDbits.LD4=0; 
-//        }
-//     
-//        
-//       __delay_ms(100);
-   }
+
 }
-
-//void interrupt gen_int(void)
-//{
-//    if(RC1IF==1)
-//    {
-////        #define    new_transmision 2
-////        #define    transmision_done 1
-//        nt=new_transmision;
-//        PIE1bits.RC1IE=0;
-//        
-//        if((RCREG1=='R'|RCREG1=='r') & (nt==new_transmision))
-//        {
-//            USARTWriteString("reset");
-//            USARTGotoNewLine();
-//            USARTGotoNewLine();
-//            dir=0;
-//            nr_pasi=0;
-//            start=0;
-//            nt=transmision_done;
-//        }
-//        if((RCREG1=='D'|RCREG1=='d') & (nt==new_transmision))
-//        {
-//            USARTWriteString("Alege sensul");
-//            USARTGotoNewLine();
-//            USARTWriteString("Inainte tasta F");
-//            USARTGotoNewLine();  
-//            USARTWriteString("Inapoi tasta B");
-//            USARTGotoNewLine();
-//            USARTGotoNewLine();
-//            dir=1;
-//            nt=transmision_done;
-//        }
-//        if(((RCREG1=='F'|RCREG1=='f')& dir==1) & (nt==new_transmision))
-//        {
-//          directie_2=forward  ; 
-//           USARTWriteString("Inainte");
-//           USARTGotoNewLine();
-//           USARTWriteString("Selecteaza numar pasi");
-//           USARTGotoNewLine();
-//           USARTGotoNewLine();
-//          dir=0;
-//          sel_pasi=1;
-//          nt=transmision_done;
-//        }
-//        
-//        if(sel_pasi==1&nt==new_transmision)
-//        {
-//         
-//           pasi_int=RCREG1;
-//           pasi=pasi_int-48;
-//            sprintf(str, "Numar pasi= %u", pasi);
-//            USARTWriteString(str);
-//             USARTGotoNewLine();
-//           USARTWriteString("Porneste cu tasta G");
-//           USARTGotoNewLine();
-//           USARTGotoNewLine();
-//           sel_pasi=0;
-//           nt=transmision_done;
-//        }
-//        
-//        
-//        if((RCREG1=='G'|RCREG1=='g') & (nt==new_transmision))
-//        {
-//            USARTWriteString("go");
-//            USARTGotoNewLine();
-//            USARTGotoNewLine();
-//          go_stepper=1;
-//          start=0;
-//          nt=transmision_done;
-//        }
-//   
-//        nt=transmision_done;
-//        RC1IF=0;
-////        PIE1bits.RC1IE=1;
-//    }
-//    
-//}
+}

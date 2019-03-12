@@ -34,7 +34,8 @@
 void buck_boost (int type, int dty );
 void buck(int duty_cycle);
 void boost(int duty_cycle);
-
+//void right(int dty_car);
+//void left (int dty_car);
 
 
 

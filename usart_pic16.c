@@ -26,8 +26,6 @@ me@avinashgupta.com
 #include <stdint.h>
 #include <xc.h>
 #include "config.h"
-#include "usart_pic16.h"
-
 void USARTInit(uint16_t baud_rate)
 {
     //Setup queue

@@ -8500,7 +8500,7 @@ extern __nonreentrant void _delay3(unsigned char);
 #pragma config MCLRE = EXTMCLR
 
 
-#pragma config STVREN = ON
+#pragma config STVREN = OFF
 #pragma config LVP = OFF
 #pragma config XINST = OFF
 
@@ -8534,130 +8534,43 @@ extern __nonreentrant void _delay3(unsigned char);
 
 #pragma config EBTRB = OFF
 
-# 33 "config.h"
+# 34 "i2c_display.h"
+void I2C_Master_Init(const unsigned long c);
+void I2C_Master_Wait();
+void I2C_Master_Start();
+void I2C_Master_RepeatedStart();
+void I2C_Master_Stop();
+void I2C_Master_Write(unsigned d);
+void I2C_Write_Display(unsigned d);
+
+unsigned short I2C_Master_Read(unsigned short a);
+
+
+void Lcd_Port(char data);
+void Lcd_Cmd(char a);
+void Lcd_Clear();
+void Lcd_Set_Cursor(char a, char b);
+void Lcd_Init();
+void Lcd_Write_Char(char a);
+void Lcd_Write_String(char *a);
+void Lcd_Shift_Right();
+void Lcd_Shift_Left();
+void Cursor_On();
+void Cursor_Off();
+void Cursor_Left();
+void Cursor_Right();
+
+# 39 "config.h"
 void config(void);
 void pwm_config(void);
 void adc_config(void);
 void eusart_config(void);
+void init_io_display(void);
 
 # 34 "pwm_con.h"
 void buck_boost (int type, int dty );
 void buck(int duty_cycle);
 void boost(int duty_cycle);
-
-# 13 "C:\Program Files (x86)\Microchip\xc8\v1.44\include\stdint.h"
-typedef signed char int8_t;
-
-# 20
-typedef signed int int16_t;
-
-# 28
-typedef signed short long int int24_t;
-
-# 36
-typedef signed long int int32_t;
-
-# 43
-typedef unsigned char uint8_t;
-
-# 49
-typedef unsigned int uint16_t;
-
-# 56
-typedef unsigned short long int uint24_t;
-
-# 63
-typedef unsigned long int uint32_t;
-
-# 71
-typedef signed char int_least8_t;
-
-# 78
-typedef signed int int_least16_t;
-
-# 90
-typedef signed short long int int_least24_t;
-
-# 98
-typedef signed long int int_least32_t;
-
-# 105
-typedef unsigned char uint_least8_t;
-
-# 111
-typedef unsigned int uint_least16_t;
-
-# 121
-typedef unsigned short long int uint_least24_t;
-
-# 128
-typedef unsigned long int uint_least32_t;
-
-# 137
-typedef signed char int_fast8_t;
-
-# 144
-typedef signed int int_fast16_t;
-
-# 156
-typedef signed short long int int_fast24_t;
-
-# 164
-typedef signed long int int_fast32_t;
-
-# 171
-typedef unsigned char uint_fast8_t;
-
-# 177
-typedef unsigned int uint_fast16_t;
-
-# 187
-typedef unsigned short long int uint_fast24_t;
-
-# 194
-typedef unsigned long int uint_fast32_t;
-
-# 200
-typedef int32_t intmax_t;
-
-
-
-
-typedef uint32_t uintmax_t;
-
-
-
-
-typedef int16_t intptr_t;
-
-
-
-
-typedef uint16_t uintptr_t;
-
-# 38 "usart_pic16.h"
-volatile char URBuff[64];
-volatile int8_t UQFront;
-volatile int8_t UQEnd;
-
-void USARTInit(uint16_t baud_rate);
-void USARTWriteChar(char ch);
-void USARTWriteString(const char *str);
-void USARTWriteLine(const char *str);
-void USARTWriteInt(int16_t val, int8_t field_length);
-void USARTHandleRxInt();
-char USARTReadData();
-uint8_t USARTDataAvailable();
-void USARTGotoNewLine();
-void USARTReadBuffer(char *buff,uint16_t len);
-void USARTFlushBuffer();
-
-
-void USART2Init(uint16_t baud_rate);
-void USART2WriteChar(char ch);
-void USART2WriteString(const char *str);
-void USART2GotoNewLine();
-void USART2WriteInt(int16_t val, int8_t field_length);
 
 # 30 "C:\Program Files (x86)\Microchip\xc8\v1.44\include\math.h"
 extern double fabs(double);
@@ -8750,14 +8663,8 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
-# 29 "stepper.h"
-void stepper_move(unsigned directie, unsigned pasi);
-
-# 23 "main.h"
-void interrupt gen_int(void);
-
-# 18 "main.c"
-int a,c,d,fac;
+# 20 "main.c"
+int fac;
 unsigned duty_boost,duty_buck;
 unsigned int pasi,dir,nr_pasi,directie_2,go_stepper,start,pasi_int,sel_pasi,nt;
 char str[20];
@@ -8773,35 +8680,97 @@ char pwm_buffer[20];
 config();
 pwm_config();
 adc_config();
-eusart_config();
-
-int dty,rez_adc;
+init_io_display();
+char str_V[8],str_A[8],str_P[8];
+float tens,tens_A,curent,Power,Iout,Uout;
+int rez_adc_A,rez_adc_U;
+int dty,rez_adc,tip,port;
 float numar;
 dty=0;
+port=0;
+TRISDbits.RD4=0;
 LATDbits.LD6=0;
 LATDbits.LD7=0;
 LATDbits.LD5=0;
 LATDbits.LD4=0;
 
 
-ADCON0=0b00000011;
+ADCON0=0b00010011;
 
-# 52
+Lcd_Clear();
+
+
+
+
 while(1)
 {
-ADCON0=0b00000011;
+
+
+buck_boost (2,50 );
+if(port==0);
+{
+ADCON0=0b00000111;
 _delay((unsigned long)((10)*(64000000/4000.0)));
 ADCON0bits.GO=1;
 _delay((unsigned long)((100)*(64000000/4000.0)));
+rez_adc_U=ADRESH;
+tens=rez_adc_U*0.01953125;
+Uout=tens/0.25;
+Lcd_Set_Cursor(1,1);
+Lcd_Write_String("U=");
+sprintf(str_V, "%.2f", tens);
+Lcd_Set_Cursor(1,3);
+Lcd_Write_String(str_V);
+port=1;
+_delay((unsigned long)((100)*(64000000/4000.0)));
+ADRESH=0X00;
+_delay((unsigned long)((100)*(64000000/4000.0)));
+}
+
+if(port==1);
+{
+ADCON0=0b00001011;
+_delay((unsigned long)((10)*(64000000/4000.0)));
+ADCON0bits.GO=1;
+_delay((unsigned long)((100)*(64000000/4000.0)));
+rez_adc_A=ADRESH;
+tens_A=rez_adc_A*0.0181372549019608;
+Iout=tens_A;
+
+Lcd_Set_Cursor(2,1);
+Lcd_Write_String("I=");
+sprintf(str_A, "%.2f", curent);
+Lcd_Set_Cursor(2,3);
+Lcd_Write_String(str_A);
+Lcd_Write_String(" A");
+port=2;
+_delay((unsigned long)((100)*(64000000/4000.0)));
+ADRESH=0X00;
+_delay((unsigned long)((100)*(64000000/4000.0)));
+}
+if(port==2);
+{
+ADCON0=0b00001111;
+_delay((unsigned long)((10)*(64000000/4000.0)));
+ADCON0bits.GO=1;
+_delay((unsigned long)((100)*(64000000/4000.0)));
+rez_adc_U=ADRESH;
+tens=rez_adc_U*0.01953125;
+tens=tens/0.2;
+Lcd_Set_Cursor(1,9);
+Lcd_Write_String("Ui=");
+sprintf(str_V, "%.2f", tens);
+Lcd_Set_Cursor(1,12);
+Lcd_Write_String(str_V);
+Lcd_Write_String(" V");
+port=0;
+_delay((unsigned long)((100)*(64000000/4000.0)));
+ADRESH=0X00;
+_delay((unsigned long)((100)*(64000000/4000.0)));
+}
+
+Power=Uout*Iout;
 
 
-rez_adc=ADRESH;
-numar=rez_adc*0.0182;
-dty=rez_adc*0.39;
-
-buck_boost (2, dty );
-
-# 105
 }
 }
-

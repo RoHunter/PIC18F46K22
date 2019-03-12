@@ -144,6 +144,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S432 . . . ]
 "9434
 [v _PIE1bits `VS432 ~T0 @X0 0 e@3997 ]
+"34 i2c_display.h
+[v _I2C_Master_Init `(v ~T0 @X0 0 ef1`Cul ]
+[v F6949 `(v ~T0 @X0 1 tf1`ul ]
+"164 C:\Program Files (x86)\Microchip\xc8\v1.44\include\pic18.h
+[v __delay `JF6949 ~T0 @X0 0 e ]
+[p i __delay ]
+"49 i2c_display.h
+[v _Lcd_Init `(v ~T0 @X0 0 ef ]
+"47
+[v _Lcd_Clear `(v ~T0 @X0 0 ef ]
+"55
+[v _Cursor_Off `(v ~T0 @X0 0 ef ]
+"48
+[v _Lcd_Set_Cursor `(v ~T0 @X0 0 ef2`uc`uc ]
+"51
+[v _Lcd_Write_String `(v ~T0 @X0 0 ef1`*uc ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -6707,10 +6723,32 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 164: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 166: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 168: extern __nonreentrant void _delay3(unsigned char);
-[; ;config.h: 33: void config(void);
-[; ;config.h: 34: void pwm_config(void);
-[; ;config.h: 35: void adc_config(void);
-[; ;config.h: 36: void eusart_config(void);
+[; ;i2c_display.h: 34: void I2C_Master_Init(const unsigned long c);
+[; ;i2c_display.h: 35: void I2C_Master_Wait();
+[; ;i2c_display.h: 36: void I2C_Master_Start();
+[; ;i2c_display.h: 37: void I2C_Master_RepeatedStart();
+[; ;i2c_display.h: 38: void I2C_Master_Stop();
+[; ;i2c_display.h: 39: void I2C_Master_Write(unsigned d);
+[; ;i2c_display.h: 40: void I2C_Write_Display(unsigned d);
+[; ;i2c_display.h: 42: unsigned short I2C_Master_Read(unsigned short a);
+[; ;i2c_display.h: 45: void Lcd_Port(char data);
+[; ;i2c_display.h: 46: void Lcd_Cmd(char a);
+[; ;i2c_display.h: 47: void Lcd_Clear();
+[; ;i2c_display.h: 48: void Lcd_Set_Cursor(char a, char b);
+[; ;i2c_display.h: 49: void Lcd_Init();
+[; ;i2c_display.h: 50: void Lcd_Write_Char(char a);
+[; ;i2c_display.h: 51: void Lcd_Write_String(char *a);
+[; ;i2c_display.h: 52: void Lcd_Shift_Right();
+[; ;i2c_display.h: 53: void Lcd_Shift_Left();
+[; ;i2c_display.h: 54: void Cursor_On();
+[; ;i2c_display.h: 55: void Cursor_Off();
+[; ;i2c_display.h: 56: void Cursor_Left();
+[; ;i2c_display.h: 57: void Cursor_Right();
+[; ;config.h: 39: void config(void);
+[; ;config.h: 40: void pwm_config(void);
+[; ;config.h: 41: void adc_config(void);
+[; ;config.h: 42: void eusart_config(void);
+[; ;config.h: 43: void init_io_display(void);
 [; ;stdint.h: 13: typedef signed char int8_t;
 [; ;stdint.h: 20: typedef signed int int16_t;
 [; ;stdint.h: 28: typedef signed short long int int24_t;
@@ -6764,184 +6802,304 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;usart_pic16.h: 57: void USART2WriteString(const char *str);
 [; ;usart_pic16.h: 58: void USART2GotoNewLine();
 [; ;usart_pic16.h: 59: void USART2WriteInt(int16_t val, int8_t field_length);
-"4 config.c
+"7 bit_config.h
+[p x FOSC=INTIO67 ]
+"8
+[p x PLLCFG=ON ]
+"9
+[p x PRICLKEN=OFF ]
+"10
+[p x FCMEN=OFF ]
+"11
+[p x IESO=OFF ]
+"14
+[p x PWRTEN=OFF ]
+"15
+[p x BOREN=OFF ]
+"16
+[p x BORV=190 ]
+"19
+[p x WDTEN=OFF ]
+"20
+[p x WDTPS=32768 ]
+"23
+[p x CCP2MX=PORTC1 ]
+"24
+[p x PBADEN=ON ]
+"25
+[p x CCP3MX=PORTB5 ]
+"26
+[p x HFOFST=ON ]
+"27
+[p x T3CMX=PORTC0 ]
+"28
+[p x P2BMX=PORTD2 ]
+"29
+[p x MCLRE=EXTMCLR ]
+"32
+[p x STVREN=OFF ]
+"33
+[p x LVP=OFF ]
+"34
+[p x XINST=OFF ]
+"37
+[p x CP0=OFF ]
+"38
+[p x CP1=OFF ]
+"39
+[p x CP2=OFF ]
+"40
+[p x CP3=OFF ]
+"43
+[p x CPB=OFF ]
+"44
+[p x CPD=OFF ]
+"47
+[p x WRT0=OFF ]
+"48
+[p x WRT1=OFF ]
+"49
+[p x WRT2=OFF ]
+"50
+[p x WRT3=OFF ]
+"53
+[p x WRTC=OFF ]
+"54
+[p x WRTB=OFF ]
+"55
+[p x WRTD=OFF ]
+"58
+[p x EBTR0=OFF ]
+"59
+[p x EBTR1=OFF ]
+"60
+[p x EBTR2=OFF ]
+"61
+[p x EBTR3=OFF ]
+"64
+[p x EBTRB=OFF ]
+"7 config.c
 [v _config `(v ~T0 @X0 1 ef ]
-"5
+"8
 {
-[; ;config.c: 4: void config(void)
-[; ;config.c: 5: {
+[; ;config.c: 7: void config(void)
+[; ;config.c: 8: {
 [e :U _config ]
 [f ]
-[; ;config.c: 6: TRISA=0X00;
-"6
-[e = _TRISA -> -> 0 `i `uc ]
-[; ;config.c: 7: TRISB=0X00;
-"7
-[e = _TRISB -> -> 0 `i `uc ]
-[; ;config.c: 8: TRISC=0X00;
-"8
-[e = _TRISC -> -> 0 `i `uc ]
-[; ;config.c: 9: TRISD=0X00;
+[; ;config.c: 9: TRISA=0Xff;
 "9
-[e = _TRISD -> -> 0 `i `uc ]
-[; ;config.c: 10: TRISE=0Xff;
+[e = _TRISA -> -> 255 `i `uc ]
+[; ;config.c: 10: TRISB=0X00;
 "10
-[e = _TRISE -> -> 255 `i `uc ]
-[; ;config.c: 12: PORTA=0X00;
+[e = _TRISB -> -> 0 `i `uc ]
+[; ;config.c: 11: TRISC=0X00;
+"11
+[e = _TRISC -> -> 0 `i `uc ]
+[; ;config.c: 12: TRISD=0X00;
 "12
-[e = _PORTA -> -> 0 `i `uc ]
-[; ;config.c: 13: PORTB=0X00;
+[e = _TRISD -> -> 0 `i `uc ]
+[; ;config.c: 13: TRISE=0Xff;
 "13
-[e = _PORTB -> -> 0 `i `uc ]
-[; ;config.c: 14: PORTC=0X00;
-"14
-[e = _PORTC -> -> 0 `i `uc ]
-[; ;config.c: 15: PORTD=0X00;
+[e = _TRISE -> -> 255 `i `uc ]
+[; ;config.c: 15: PORTA=0X00;
 "15
-[e = _PORTD -> -> 0 `i `uc ]
-[; ;config.c: 16: PORTE=0X00;
+[e = _PORTA -> -> 0 `i `uc ]
+[; ;config.c: 16: PORTB=0X00;
 "16
-[e = _PORTE -> -> 0 `i `uc ]
-[; ;config.c: 18: LATA=0X00;
+[e = _PORTB -> -> 0 `i `uc ]
+[; ;config.c: 17: PORTC=0X00;
+"17
+[e = _PORTC -> -> 0 `i `uc ]
+[; ;config.c: 18: PORTD=0X00;
 "18
-[e = _LATA -> -> 0 `i `uc ]
-[; ;config.c: 19: LATB=0X00;
+[e = _PORTD -> -> 0 `i `uc ]
+[; ;config.c: 19: PORTE=0X00;
 "19
-[e = _LATB -> -> 0 `i `uc ]
-[; ;config.c: 20: LATC=0X00;
-"20
-[e = _LATC -> -> 0 `i `uc ]
-[; ;config.c: 21: LATD=0X00;
+[e = _PORTE -> -> 0 `i `uc ]
+[; ;config.c: 21: LATA=0X00;
 "21
-[e = _LATD -> -> 0 `i `uc ]
-[; ;config.c: 22: LATE=0X00;
+[e = _LATA -> -> 0 `i `uc ]
+[; ;config.c: 22: LATB=0X00;
 "22
-[e = _LATE -> -> 0 `i `uc ]
-[; ;config.c: 24: ANSELA=0X00;
+[e = _LATB -> -> 0 `i `uc ]
+[; ;config.c: 23: LATC=0X00;
+"23
+[e = _LATC -> -> 0 `i `uc ]
+[; ;config.c: 24: LATD=0X00;
 "24
-[e = _ANSELA -> -> 0 `i `uc ]
-[; ;config.c: 25: ANSELB=0X00;
+[e = _LATD -> -> 0 `i `uc ]
+[; ;config.c: 25: LATE=0X00;
 "25
-[e = _ANSELB -> -> 0 `i `uc ]
-[; ;config.c: 26: ANSELC=0X00;
-"26
-[e = _ANSELC -> -> 0 `i `uc ]
-[; ;config.c: 27: ANSELD=0X00;
+[e = _LATE -> -> 0 `i `uc ]
+[; ;config.c: 27: ANSELA=0Xff;
 "27
-[e = _ANSELD -> -> 0 `i `uc ]
-[; ;config.c: 28: ANSELE=0X00;
+[e = _ANSELA -> -> 255 `i `uc ]
+[; ;config.c: 28: ANSELB=0X00;
 "28
-[e = _ANSELE -> -> 0 `i `uc ]
-[; ;config.c: 30: OSCCON=0b01110100;
+[e = _ANSELB -> -> 0 `i `uc ]
+[; ;config.c: 29: ANSELC=0X00;
+"29
+[e = _ANSELC -> -> 0 `i `uc ]
+[; ;config.c: 30: ANSELD=0X00;
 "30
-[e = _OSCCON -> -> 116 `i `uc ]
-[; ;config.c: 31: OSCTUNEbits.PLLEN=1;
+[e = _ANSELD -> -> 0 `i `uc ]
+[; ;config.c: 31: ANSELE=0X00;
 "31
+[e = _ANSELE -> -> 0 `i `uc ]
+[; ;config.c: 33: OSCCON=0b01110100;
+"33
+[e = _OSCCON -> -> 116 `i `uc ]
+[; ;config.c: 34: OSCTUNEbits.PLLEN=1;
+"34
 [e = . . _OSCTUNEbits 0 1 -> -> 1 `i `uc ]
-[; ;config.c: 41: }
-"41
+[; ;config.c: 44: }
+"44
 [e :UE 849 ]
 }
-"43
+"46
 [v _pwm_config `(v ~T0 @X0 1 ef ]
-"44
+"47
 {
-[; ;config.c: 43: void pwm_config(void)
-[; ;config.c: 44: {
+[; ;config.c: 46: void pwm_config(void)
+[; ;config.c: 47: {
 [e :U _pwm_config ]
 [f ]
-[; ;config.c: 45: CCPTMRS0=0b00000000;
-"45
-[e = _CCPTMRS0 -> -> 0 `i `uc ]
-[; ;config.c: 46: CCP2CON=0b00001100;
-"46
-[e = _CCP2CON -> -> 12 `i `uc ]
-[; ;config.c: 47: CCP1CON=0b00001100;
-"47
-[e = _CCP1CON -> -> 12 `i `uc ]
-[; ;config.c: 48: T2CON=0b01111101;
+[; ;config.c: 48: CCPTMRS0=0b00000000;
 "48
-[e = _T2CON -> -> 125 `i `uc ]
-[; ;config.c: 49: PR2=160;
+[e = _CCPTMRS0 -> -> 0 `i `uc ]
+[; ;config.c: 49: CCP2CON=0b00001100;
 "49
-[e = _PR2 -> -> 160 `i `uc ]
-[; ;config.c: 51: CCPR2L=128;
+[e = _CCP2CON -> -> 12 `i `uc ]
+[; ;config.c: 50: CCP1CON=0b00001100;
+"50
+[e = _CCP1CON -> -> 12 `i `uc ]
+[; ;config.c: 51: T2CON=0b01111101;
 "51
-[e = _CCPR2L -> -> 128 `i `uc ]
-[; ;config.c: 52: CCPR1L=64;
+[e = _T2CON -> -> 125 `i `uc ]
+[; ;config.c: 52: PR2=160;
 "52
-[e = _CCPR1L -> -> 64 `i `uc ]
-[; ;config.c: 53: CCP3CON=0b00001100;
-"53
-[e = _CCP3CON -> -> 12 `i `uc ]
-[; ;config.c: 54: CCPR3L=128;
+[e = _PR2 -> -> 160 `i `uc ]
+[; ;config.c: 54: CCPR2L=128;
 "54
-[e = _CCPR3L -> -> 128 `i `uc ]
-[; ;config.c: 57: }
+[e = _CCPR2L -> -> 128 `i `uc ]
+[; ;config.c: 55: CCPR1L=64;
+"55
+[e = _CCPR1L -> -> 64 `i `uc ]
+[; ;config.c: 56: CCP3CON=0b00001100;
+"56
+[e = _CCP3CON -> -> 12 `i `uc ]
+[; ;config.c: 57: CCPR3L=128;
 "57
+[e = _CCPR3L -> -> 128 `i `uc ]
+[; ;config.c: 60: }
+"60
 [e :UE 850 ]
 }
-"59
+"62
 [v _adc_config `(v ~T0 @X0 1 ef ]
-"60
+"63
 {
-[; ;config.c: 59: void adc_config(void)
-[; ;config.c: 60: { TRISAbits.RA0=1;
+[; ;config.c: 62: void adc_config(void)
+[; ;config.c: 63: { TRISAbits.RA0=1;
 [e :U _adc_config ]
 [f ]
 [e = . . _TRISAbits 1 0 -> -> 1 `i `uc ]
-[; ;config.c: 61: ANSELAbits.ANSA0=1;
-"61
+[; ;config.c: 64: ANSELAbits.ANSA0=1;
+"64
 [e = . . _ANSELAbits 0 0 -> -> 1 `i `uc ]
-[; ;config.c: 62: TRISAbits.RA1=1;
-"62
+[; ;config.c: 65: TRISAbits.RA1=1;
+"65
 [e = . . _TRISAbits 1 1 -> -> 1 `i `uc ]
-[; ;config.c: 63: ANSELAbits.ANSA1=1;
-"63
-[e = . . _ANSELAbits 0 1 -> -> 1 `i `uc ]
-[; ;config.c: 66: ADCON0=0b00000011;
+[; ;config.c: 66: ANSELAbits.ANSA1=1;
 "66
-[e = _ADCON0 -> -> 3 `i `uc ]
-[; ;config.c: 67: ADCON1=0b10000000;
-"67
-[e = _ADCON1 -> -> 128 `i `uc ]
-[; ;config.c: 68: ADCON2=0b00111110;
-"68
-[e = _ADCON2 -> -> 62 `i `uc ]
-[; ;config.c: 69: ADCON2bits.ADFM=0;
+[e = . . _ANSELAbits 0 1 -> -> 1 `i `uc ]
+[; ;config.c: 69: ADCON0=0b00000011;
 "69
-[e = . . _ADCON2bits 0 3 -> -> 0 `i `uc ]
-[; ;config.c: 71: }
+[e = _ADCON0 -> -> 3 `i `uc ]
+[; ;config.c: 70: ADCON1=0b10000000;
+"70
+[e = _ADCON1 -> -> 128 `i `uc ]
+[; ;config.c: 71: ADCON2=0b00111110;
 "71
+[e = _ADCON2 -> -> 62 `i `uc ]
+[; ;config.c: 72: ADCON2bits.ADFM=0;
+"72
+[e = . . _ADCON2bits 0 3 -> -> 0 `i `uc ]
+[; ;config.c: 74: }
+"74
 [e :UE 851 ]
 }
-"73
+"76
 [v _eusart_config `(v ~T0 @X0 1 ef ]
-"74
+"77
 {
-[; ;config.c: 73: void eusart_config(void)
-[; ;config.c: 74: {
+[; ;config.c: 76: void eusart_config(void)
+[; ;config.c: 77: {
 [e :U _eusart_config ]
 [f ]
-[; ;config.c: 75: TRISCbits.RC6=1;
-"75
-[e = . . _TRISCbits 1 6 -> -> 1 `i `uc ]
-[; ;config.c: 76: USARTInit(19200);
-"76
-[e ( _USARTInit (1 -> -> 19200 `i `ui ]
-[; ;config.c: 77: TRISCbits.RC7=1;
-"77
-[e = . . _TRISCbits 1 7 -> -> 1 `i `uc ]
-[; ;config.c: 78: INTCONbits.GIE=1;
+[; ;config.c: 78: TRISCbits.RC6=1;
 "78
-[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
-[; ;config.c: 79: INTCONbits.PEIE=1;
+[e = . . _TRISCbits 1 6 -> -> 1 `i `uc ]
+[; ;config.c: 79: USARTInit(19200);
 "79
-[e = . . _INTCONbits 1 6 -> -> 1 `i `uc ]
-[; ;config.c: 80: PIE1bits.RC1IE=1;
+[e ( _USARTInit (1 -> -> 19200 `i `ui ]
+[; ;config.c: 80: TRISCbits.RC7=1;
 "80
-[e = . . _PIE1bits 0 5 -> -> 1 `i `uc ]
-[; ;config.c: 83: }
+[e = . . _TRISCbits 1 7 -> -> 1 `i `uc ]
+[; ;config.c: 81: INTCONbits.GIE=1;
+"81
+[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
+[; ;config.c: 82: INTCONbits.PEIE=1;
+"82
+[e = . . _INTCONbits 1 6 -> -> 1 `i `uc ]
+[; ;config.c: 83: PIE1bits.RC1IE=1;
 "83
+[e = . . _PIE1bits 0 5 -> -> 1 `i `uc ]
+[; ;config.c: 86: }
+"86
 [e :UE 852 ]
 }
+"88
+[v _init_io_display `(v ~T0 @X0 1 ef ]
+"89
+{
+[; ;config.c: 88: void init_io_display()
+[; ;config.c: 89: {
+[e :U _init_io_display ]
+[f ]
+[; ;config.c: 90: TRISCbits.TRISC3=1;
+"90
+[e = . . _TRISCbits 0 3 -> -> 1 `i `uc ]
+[; ;config.c: 91: TRISCbits.TRISC4=1;
+"91
+[e = . . _TRISCbits 0 4 -> -> 1 `i `uc ]
+[; ;config.c: 92: I2C_Master_Init(100000);
+"92
+[e ( _I2C_Master_Init (1 -> -> 100000 `l `ul ]
+[; ;config.c: 93: _delay((unsigned long)((100)*(64000000/4000.0)));
+"93
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;config.c: 94: Lcd_Init();
+"94
+[e ( _Lcd_Init ..  ]
+[; ;config.c: 95: Lcd_Clear();
+"95
+[e ( _Lcd_Clear ..  ]
+[; ;config.c: 96: Cursor_Off();
+"96
+[e ( _Cursor_Off ..  ]
+[; ;config.c: 97: Lcd_Set_Cursor(1,1);
+"97
+[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;config.c: 98: Lcd_Write_String("Test");
+"98
+[e ( _Lcd_Write_String (1 -> :s 1C `*uc ]
+[; ;config.c: 99: _delay((unsigned long)((100)*(64000000/4000.0)));
+"99
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
+[; ;config.c: 100: }
+"100
+[e :UE 853 ]
+}
+[a 1C 84 101 115 116 0 ]
+

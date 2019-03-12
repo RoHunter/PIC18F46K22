@@ -6601,7 +6601,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "29
 [p x MCLRE=EXTMCLR ]
 "32
-[p x STVREN=ON ]
+[p x STVREN=OFF ]
 "33
 [p x LVP=OFF ]
 "34
@@ -6642,10 +6642,32 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p x EBTR3=OFF ]
 "64
 [p x EBTRB=OFF ]
-[; ;config.h: 33: void config(void);
-[; ;config.h: 34: void pwm_config(void);
-[; ;config.h: 35: void adc_config(void);
-[; ;config.h: 36: void eusart_config(void);
+[; ;i2c_display.h: 34: void I2C_Master_Init(const unsigned long c);
+[; ;i2c_display.h: 35: void I2C_Master_Wait();
+[; ;i2c_display.h: 36: void I2C_Master_Start();
+[; ;i2c_display.h: 37: void I2C_Master_RepeatedStart();
+[; ;i2c_display.h: 38: void I2C_Master_Stop();
+[; ;i2c_display.h: 39: void I2C_Master_Write(unsigned d);
+[; ;i2c_display.h: 40: void I2C_Write_Display(unsigned d);
+[; ;i2c_display.h: 42: unsigned short I2C_Master_Read(unsigned short a);
+[; ;i2c_display.h: 45: void Lcd_Port(char data);
+[; ;i2c_display.h: 46: void Lcd_Cmd(char a);
+[; ;i2c_display.h: 47: void Lcd_Clear();
+[; ;i2c_display.h: 48: void Lcd_Set_Cursor(char a, char b);
+[; ;i2c_display.h: 49: void Lcd_Init();
+[; ;i2c_display.h: 50: void Lcd_Write_Char(char a);
+[; ;i2c_display.h: 51: void Lcd_Write_String(char *a);
+[; ;i2c_display.h: 52: void Lcd_Shift_Right();
+[; ;i2c_display.h: 53: void Lcd_Shift_Left();
+[; ;i2c_display.h: 54: void Cursor_On();
+[; ;i2c_display.h: 55: void Cursor_Off();
+[; ;i2c_display.h: 56: void Cursor_Left();
+[; ;i2c_display.h: 57: void Cursor_Right();
+[; ;config.h: 39: void config(void);
+[; ;config.h: 40: void pwm_config(void);
+[; ;config.h: 41: void adc_config(void);
+[; ;config.h: 42: void eusart_config(void);
+[; ;config.h: 43: void init_io_display(void);
 "13 pwm_con.c
 [v _c `i ~T0 @X0 1 e ]
 [v _b `i ~T0 @X0 1 e ]
@@ -6656,82 +6678,83 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _dty `i ~T0 @X0 1 e ]
 [v _buck `i ~T0 @X0 1 e ]
 [v _boost `i ~T0 @X0 1 e ]
-[; ;pwm_con.c: 13: int c,b,d,adcp,adcn,type,dty,buck,boost;
-"42
+[v _dty_car `i ~T0 @X0 1 e ]
+[; ;pwm_con.c: 13: int c,b,d,adcp,adcn,type,dty,buck,boost,dty_car;
+"40
 [v _buck_boost `(v ~T0 @X0 1 ef2`i`i ]
-"43
+"41
 {
-[; ;pwm_con.c: 42: void buck_boost (int type, int dty )
-[; ;pwm_con.c: 43: {
+[; ;pwm_con.c: 40: void buck_boost (int type, int dty )
+[; ;pwm_con.c: 41: {
 [e :U _buck_boost ]
 [v _type `i ~T0 @X0 1 r1 ]
 [v _dty `i ~T0 @X0 1 r2 ]
 [f ]
-[; ;pwm_con.c: 44: if (type==1)
-"44
+[; ;pwm_con.c: 42: if (type==1)
+"42
 [e $ ! == _type -> 1 `i 850  ]
-[; ;pwm_con.c: 45: {
-"45
+[; ;pwm_con.c: 43: {
+"43
 {
-[; ;pwm_con.c: 46: CCPR1L=0;
-"46
+[; ;pwm_con.c: 44: CCPR1L=0;
+"44
 [e = _CCPR1L -> -> 0 `i `uc ]
-[; ;pwm_con.c: 47: if(dty>100)
-"47
+[; ;pwm_con.c: 45: if(dty>100)
+"45
 [e $ ! > _dty -> 100 `i 851  ]
-[; ;pwm_con.c: 48: {
-"48
+[; ;pwm_con.c: 46: {
+"46
 {
-[; ;pwm_con.c: 49: dty=100;
-"49
+[; ;pwm_con.c: 47: dty=100;
+"47
 [e = _dty -> 100 `i ]
-"50
+"48
 }
 [e :U 851 ]
-[; ;pwm_con.c: 50: }
-[; ;pwm_con.c: 52: c=dty*1.7;
-"52
+[; ;pwm_con.c: 48: }
+[; ;pwm_con.c: 50: c=dty*1.7;
+"50
 [e = _c -> * -> _dty `d .1.7 `i ]
-[; ;pwm_con.c: 53: CCPR2L=c;
-"53
+[; ;pwm_con.c: 51: CCPR2L=c;
+"51
 [e = _CCPR2L -> _c `uc ]
-"55
+"53
 }
 [e :U 850 ]
-[; ;pwm_con.c: 55: }
-[; ;pwm_con.c: 57: if (type==2)
-"57
+[; ;pwm_con.c: 53: }
+[; ;pwm_con.c: 55: if (type==2)
+"55
 [e $ ! == _type -> 2 `i 852  ]
-[; ;pwm_con.c: 58: {
+[; ;pwm_con.c: 56: {
+"56
+{
+[; ;pwm_con.c: 57: CCPR2L=100;
+"57
+[e = _CCPR2L -> -> 100 `i `uc ]
+[; ;pwm_con.c: 58: if(dty>100)
 "58
-{
-[; ;pwm_con.c: 59: CCPR2L=0b11111111;
-"59
-[e = _CCPR2L -> -> 255 `i `uc ]
-[; ;pwm_con.c: 60: if(dty>100)
-"60
 [e $ ! > _dty -> 100 `i 853  ]
-[; ;pwm_con.c: 61: {
-"61
+[; ;pwm_con.c: 59: {
+"59
 {
-[; ;pwm_con.c: 62: dty=100;
-"62
+[; ;pwm_con.c: 60: dty=100;
+"60
 [e = _dty -> 100 `i ]
-"63
+"61
 }
 [e :U 853 ]
-[; ;pwm_con.c: 63: }
-[; ;pwm_con.c: 65: c=dty*1.7;
-"65
+[; ;pwm_con.c: 61: }
+[; ;pwm_con.c: 63: c=dty*1.7;
+"63
 [e = _c -> * -> _dty `d .1.7 `i ]
-[; ;pwm_con.c: 66: CCPR1L=c;
-"66
+[; ;pwm_con.c: 64: CCPR1L=c;
+"64
 [e = _CCPR1L -> _c `uc ]
-"68
+"66
 }
 [e :U 852 ]
-[; ;pwm_con.c: 68: }
-[; ;pwm_con.c: 69: };
-"69
+[; ;pwm_con.c: 66: }
+[; ;pwm_con.c: 67: };
+"67
 [e :UE 849 ]
 }

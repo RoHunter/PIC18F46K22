@@ -1,9 +1,12 @@
 #include <xc.h>
 #include "config.h"
 #include "usart_pic16.h" 
+#include <pic18f46k22.h>
+#include "bit_config.h"
+
 void config(void)
 {
-    TRISA=0X00;
+    TRISA=0Xff;
     TRISB=0X00;
     TRISC=0X00;
     TRISD=0X00;
@@ -21,7 +24,7 @@ void config(void)
     LATD=0X00;
     LATE=0X00;
     
-    ANSELA=0X00;
+    ANSELA=0Xff;
     ANSELB=0X00;
     ANSELC=0X00;
     ANSELD=0X00;
@@ -82,3 +85,16 @@ void eusart_config(void)
 
 }
 
+void init_io_display()
+{
+    TRISCbits.TRISC3=1;//i2c
+    TRISCbits.TRISC4=1;//i2c
+    I2C_Master_Init(100000);
+    __delay_ms(100);
+    Lcd_Init();
+    Lcd_Clear();
+    Cursor_Off();
+    Lcd_Set_Cursor(1,1);
+    Lcd_Write_String("Test");
+    __delay_ms(100);
+}

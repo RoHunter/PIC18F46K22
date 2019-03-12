@@ -2,4 +2,5 @@
  build/default/production/adc.p1:  \
  adc.c  \
 usart_pic16.h  \
-config.h 
+config.h  \
+i2c_display.h 

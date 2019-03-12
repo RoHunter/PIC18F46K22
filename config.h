@@ -30,16 +30,17 @@
 // more than once.  
 #ifndef XC_HEADER_TEMPLATE_H
 #define	XC_HEADER_TEMPLATE_H
+
+#include <xc.h> // include processor files - each processor file is guarded.  
+#include "i2c_display.h"
+// TODO Insert appropriate #include <>
+
+// TODO Insert C++ class definitions if appropriate
 void config(void);
 void pwm_config(void);
 void adc_config(void);
 void eusart_config(void);
-#include <xc.h> // include processor files - each processor file is guarded.  
-
-// TODO Insert appropriate #include <>
-
-// TODO Insert C++ class definitions if appropriate
-
+void init_io_display(void);
 // TODO Insert declarations
 
 // Comment a function and leverage automatic documentation with slash star star
