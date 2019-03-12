@@ -26,14 +26,13 @@
  * Revision history: 
  */
 
-void stepper_move(unsigned directie, unsigned pasi);
+
 // This is a guard condition so th-at contents of this file are not included
 // more than once.  
-#ifndef XC_HEADER_TEMPLATE_H
-#define	XC_HEADER_TEMPLATE_H
+
 
 #include <xc.h> // include processor files - each processor file is guarded.  
-
+void stepper_move(unsigned directie, unsigned pasi);
 // TODO Insert appropriate #include <>
 
 // TODO Insert C++ class definitions if appropriate
@@ -75,5 +74,4 @@ extern "C" {
 }
 #endif /* __cplusplus */
 
-#endif	/* XC_HEADER_TEMPLATE_H */
 

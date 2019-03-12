@@ -9,6 +9,7 @@
 #include <xc.h>
 #include "bit_config.h"
 #include "config.h"
+#include "afis_display.h"
 
 char str_V[8],str_A[8],str_P[8];
 float tens,curent;

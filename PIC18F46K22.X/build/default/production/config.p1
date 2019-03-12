@@ -6744,11 +6744,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;i2c_display.h: 55: void Cursor_Off();
 [; ;i2c_display.h: 56: void Cursor_Left();
 [; ;i2c_display.h: 57: void Cursor_Right();
-[; ;config.h: 39: void config(void);
-[; ;config.h: 40: void pwm_config(void);
-[; ;config.h: 41: void adc_config(void);
-[; ;config.h: 42: void eusart_config(void);
-[; ;config.h: 43: void init_io_display(void);
+[; ;config.h: 38: void config(void);
+[; ;config.h: 39: void pwm_config(void);
+[; ;config.h: 40: void adc_config(void);
+[; ;config.h: 41: void eusart_config(void);
+[; ;config.h: 42: void init_io_display(void);
 [; ;stdint.h: 13: typedef signed char int8_t;
 [; ;stdint.h: 20: typedef signed int int16_t;
 [; ;stdint.h: 28: typedef signed short long int int24_t;

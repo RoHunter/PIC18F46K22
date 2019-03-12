@@ -8560,7 +8560,7 @@ void Cursor_Off();
 void Cursor_Left();
 void Cursor_Right();
 
-# 39 "config.h"
+# 38 "config.h"
 void config(void);
 void pwm_config(void);
 void adc_config(void);
@@ -8662,6 +8662,10 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 #pragma printf_check(sprintf) const
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
+
+# 35 "adc.h"
+void adc_U(void);
+void adc_A(void);
 
 # 22 "MPPT.h"
 void read_Iout(void);
