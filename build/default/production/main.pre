@@ -8664,11 +8664,11 @@ extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
 # 22 "MPPT.h"
-void read_Iout();
-void read_Uout();
-void read_Uin();
+void read_Iout(void);
+void read_Uout(void);
+void read_Uin(void);
 
-# 21 "main.c"
+# 13 "main.c"
 unsigned duty_boost,duty_buck;
 unsigned int pasi,dir,nr_pasi,directie_2,go_stepper,start,pasi_int,sel_pasi,nt;
 char str[20];
@@ -8758,21 +8758,7 @@ if(Uin<12)
 CCPR1L=0;
 Power=Uout*Iout;
 CCPR2L=c;
-ADCON0=0b00001011;
-_delay((unsigned long)((10)*(64000000/4000.0)));
-ADCON0bits.GO=1;
-_delay((unsigned long)((100)*(64000000/4000.0)));
-rez_adc_A=ADRESH;
-tens_A=rez_adc_A*0.0181372549019608;
-Iout=tens_A;
 
-ADCON0=0b00000111;
-_delay((unsigned long)((10)*(64000000/4000.0)));
-ADCON0bits.GO=1;
-_delay((unsigned long)((100)*(64000000/4000.0)));
-rez_adc_U=ADRESH;
-tens=rez_adc_U*0.01953125;
-Uout=tens/0.25;
 }
 
 }

@@ -7,17 +7,9 @@
 #include <stdio.h>
 #include "adc.h"
 #include "MPPT.h"
+//#include "i2c_display.h"
 
 
-#define   forward   1  
-#define   backward   2  
-#define   new_transmision 2
-#define   transmision_done 1
-#define   sel PORTEbits.RE0
-#define   dir1  LATCbits.LATC3
-#define   dir2  LATCbits.LATC4
-#define   br1  LATCbits.LATC5
-#define   br2  LATCbits.LATC6
 unsigned duty_boost,duty_buck;
 unsigned int pasi,dir,nr_pasi,directie_2,go_stepper,start,pasi_int,sel_pasi,nt;
 char str[20];
@@ -54,7 +46,7 @@ void main(void)
     {
         
 
-//        buck_boost (2,50 );
+////        buck_boost (2,50 );
    if(port==0);
     {
         read_Uout();
@@ -107,21 +99,7 @@ if(Uin<12)
     CCPR1L=0;
     Power=Uout*Iout; 
     CCPR2L=c;
-        ADCON0=0b00001011;
-        __delay_ms(10);
-        ADCON0bits.GO=1;
-        __delay_ms(100);
-        rez_adc_A=ADRESH;
-        tens_A=rez_adc_A*0.0181372549019608;
-        Iout=tens_A;
-    
-        ADCON0=0b00000111;
-        __delay_ms(10);
-        ADCON0bits.GO=1;
-        __delay_ms(100);
-        rez_adc_U=ADRESH;
-        tens=rez_adc_U*0.01953125;
-        Uout=tens/0.25;
+
 }
 
 }
